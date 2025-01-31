@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585548}
-  - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -229,26 +228,6 @@ MonoBehaviour:
   fastMoveSpeed: 80
   lookSpeed: 2
   climbSpeed: 10
---- !u!114 &330585549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e88b5fdfc778c24ba42d33eb6f10cd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  raymarching: {fileID: 7200000, guid: 57fb7a397a8fdaa419f221caa95fb782, type: 3}
-  cam: {fileID: 330585545}
-  sph: {fileID: 1323813079}
-  viewRadius: 0.5
-  blendStrength: 0.5
-  waterColor: {r: 0, g: 0, b: 1, a: 1}
-  ambientLight: {r: 1, g: 1, b: 1, a: 1}
-  lightSource: {fileID: 410087040}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,18 +429,21 @@ MonoBehaviour:
   particleCount: 10000
   particleMass: 0.02
   restDensity: 10
-  stiffness: 20
+  stiffness: 30
   viscosity: 0.1
   smoothingRadius: 0.2
   gravity: -9.81
-  timeStep: 0.02
+  gridResolution: {x: 5, y: 10, z: 5}
+  maxParticlesPerCell: 2000
+  neighborSearchRadius: 1
+  timeStep: 0.03
   subSteps: 1
   surfaceTensionCoefficient: 0.1
   xsphEpsilon: 0.4
   boundsCenter: {x: 0, y: 0, z: 0}
-  boundsSize: {x: 5, y: 5, z: 5}
-  spawnCenter: {x: 0, y: 20, z: 0}
-  spawnSize: {x: 2, y: 2, z: 2}
+  boundsSize: {x: 5, y: 10, z: 5}
+  spawnCenter: {x: 0, y: 0, z: 0}
+  spawnSize: {x: 2, y: 4, z: 2}
   obstacleCollider: {fileID: 1776656040}
   obstacleRepulsionStiffness: 5000
   particleCollisionDamping: 0.9

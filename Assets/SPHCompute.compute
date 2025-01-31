@@ -1,0 +1,296 @@
+#pragma kernel CS_Clear
+#pragma kernel CS_DensityPressure
+#pragma kernel CS_ComputeForces
+#pragma kernel CS_XSPH
+#pragma kernel CS_VV_HalfStep    // <--- New kernel
+#pragma kernel CS_VV_FullStep    // <--- New kernel
+#pragma kernel CS_Boundaries
+#pragma kernel CS_ObstacleCollision
+
+static const float PI = 3.14159265359f;
+
+struct Particle
+{
+    float3 position;
+    float3 velocity;
+    float3 acceleration;
+    float  density;
+    float  pressure;
+};
+
+cbuffer SimulationParams
+{
+    int   _ParticleCount;
+    float _DeltaTime;
+    float _ParticleMass;
+    float _RestDensity;
+    float _Stiffness;
+    float _Viscosity;
+    float _SmoothingRadius;
+    float _Gravity;
+    float _SurfaceTensionCoefficient;
+    float _XSPHEpsilon;
+    float _ParticleCollisionDamping;
+    float _ObstacleRepulsionStiffness;
+    float _ObstacleRadius;
+
+    float3 _BoundsCenter;
+    float3 _BoundsSize;
+    float3 _SpawnCenter;
+    float3 _SpawnSize;
+    float3 _ObstaclePos;
+};
+
+RWStructuredBuffer<Particle> Particles;
+
+////////////////////////////////////
+// 0) Clear Kernel
+////////////////////////////////////
+[numthreads(256, 1, 1)]
+void CS_Clear(uint3 dispatchThreadId : SV_DispatchThreadID)
+{
+    uint id = dispatchThreadId.x;
+    if (id >= _ParticleCount) return;
+
+    Particle p = Particles[id];
+
+    // Reset acceleration, density, pressure
+    p.acceleration = float3(0, 0, 0);
+    p.density = _RestDensity;
+    p.pressure = 0.0f;
+
+    Particles[id] = p;
+}
+
+////////////////////////////////////
+// 1) Density-Pressure Kernel
+////////////////////////////////////
+[numthreads(256, 1, 1)]
+void CS_DensityPressure(uint3 dispatchThreadId : SV_DispatchThreadID)
+{
+    uint id = dispatchThreadId.x;
+    if (id >= _ParticleCount) return;
+
+    Particle self = Particles[id];
+    float h = _SmoothingRadius;
+    float h2 = h * h;
+
+    float poly6 = 315.0f / (64.0f * PI * pow(h, 9.0f));
+
+    float density = 0.0f;
+    for (uint j = 0; j < _ParticleCount; j++)
+    {
+        Particle other = Particles[j];
+        float3 r = self.position - other.position;
+        float r2 = dot(r, r);
+
+        if (r2 < h2)
+        {
+            float diff = (h2 - r2);
+            density += _ParticleMass * poly6 * diff * diff * diff;
+        }
+    }
+
+    // Minimum density at restDensity
+    density = max(density, _RestDensity);
+    self.density = density;
+    self.pressure = _Stiffness * (density - _RestDensity);
+
+    Particles[id] = self;
+}
+
+////////////////////////////////////
+// 2) ComputeForces Kernel
+////////////////////////////////////
+[numthreads(256, 1, 1)]
+void CS_ComputeForces(uint3 dispatchThreadId : SV_DispatchThreadID)
+{
+    uint id = dispatchThreadId.x;
+    if (id >= _ParticleCount) return;
+
+    Particle self = Particles[id];
+    if (self.density < 1e-3f) return; // Avoid division by near-zero
+
+    float h = _SmoothingRadius;
+    float h2 = h * h;
+    float h6 = pow(h, 6);
+
+    float spikyGrad = -45.0f / (PI * h6);
+    float viscLap = 45.0f / (PI * h6);
+
+    // Start with gravity (multiplied by density to keep consistent units)
+    float3 force = float3(0, _Gravity * self.density, 0);
+
+    // For surface tension
+    float3 colorGradient = float3(0, 0, 0);
+
+    for (uint j = 0; j < _ParticleCount; j++)
+    {
+        if (j == id) continue;
+
+        Particle other = Particles[j];
+        float3 r = self.position - other.position;
+        float r2 = dot(r, r);
+        if (r2 > h2) continue;
+
+        float dist = sqrt(r2) + 1e-6f;
+        float3 dir = r / dist;
+
+        // Pressure force (Spiky gradient)
+        float pressTerm = (self.pressure + other.pressure) / (2.0f * other.density);
+        float3 gradW = spikyGrad * pow(h - dist, 2) * dir;
+        force += -_ParticleMass * pressTerm * gradW;
+
+        // Viscosity force (Viscosity Laplacian)
+        float viscTerm = _Viscosity * _ParticleMass * (other.velocity - self.velocity) / other.density;
+        float lapW = viscLap * (h - dist);
+        force += viscTerm * lapW;
+
+        // Surface tension color gradient
+        colorGradient += _ParticleMass * gradW / other.density;
+    }
+
+    // Surface tension force
+    float3 surfaceTension = _SurfaceTensionCoefficient * colorGradient;
+    force += surfaceTension;
+
+    // Acceleration = Force / density
+    self.acceleration = force / self.density;
+    Particles[id] = self;
+}
+
+////////////////////////////////////
+// 3) XSPH Kernel (optional velocity smoothing)
+////////////////////////////////////
+[numthreads(256, 1, 1)]
+void CS_XSPH(uint3 dispatchThreadId : SV_DispatchThreadID)
+{
+    uint id = dispatchThreadId.x;
+    if (id >= _ParticleCount) return;
+
+    Particle self = Particles[id];
+    float h = _SmoothingRadius;
+    float h2 = h * h;
+
+    float poly6 = 315.0f / (64.0f * PI * pow(h, 9));
+
+    float3 velocityCorrection = float3(0, 0, 0);
+    float densitySum = 0;
+
+    for (uint j = 0; j < _ParticleCount; j++)
+    {
+        Particle other = Particles[j];
+        float3 r = self.position - other.position;
+        float r2 = dot(r, r);
+
+        if (r2 < h2)
+        {
+            float W = poly6 * pow(h2 - r2, 3);
+            float rho_ij = 0.5f * (self.density + other.density);
+
+            velocityCorrection += (other.velocity - self.velocity) * W * _ParticleMass / rho_ij;
+            densitySum += W * _ParticleMass / rho_ij;
+        }
+    }
+
+    velocityCorrection *= _XSPHEpsilon / (densitySum + 1e-6f);
+    self.velocity += velocityCorrection;
+    Particles[id] = self;
+}
+
+////////////////////////////////////
+// 4) Velocity Verlet HalfStep
+////////////////////////////////////
+#pragma kernel CS_VV_HalfStep
+[numthreads(256, 1, 1)]
+void CS_VV_HalfStep(uint3 dispatchThreadId : SV_DispatchThreadID)
+{
+    uint id = dispatchThreadId.x;
+    if (id >= _ParticleCount) return;
+
+    float halfDt = 0.5f * _DeltaTime;
+    Particle p = Particles[id];
+
+    // Half-step velocity: v_half = v_old + (1/2)*a_old*dt
+    p.velocity += p.acceleration * halfDt;
+
+    // Full-step position: x_new = x_old + v_half*dt
+    p.position += p.velocity * _DeltaTime;
+
+    Particles[id] = p;
+}
+
+////////////////////////////////////
+// 5) Velocity Verlet FullStep
+////////////////////////////////////
+#pragma kernel CS_VV_FullStep
+[numthreads(256, 1, 1)]
+void CS_VV_FullStep(uint3 dispatchThreadId : SV_DispatchThreadID)
+{
+    uint id = dispatchThreadId.x;
+    if (id >= _ParticleCount) return;
+
+    float halfDt = 0.5f * _DeltaTime;
+    Particle p = Particles[id];
+
+    // Finish velocity update: v_new = v_half + (1/2)*a_new*dt
+    p.velocity += p.acceleration * halfDt;
+
+    Particles[id] = p;
+}
+
+////////////////////////////////////
+// 6) Boundaries Kernel
+////////////////////////////////////
+[numthreads(256, 1, 1)]
+void CS_Boundaries(uint3 dispatchThreadId : SV_DispatchThreadID)
+{
+    uint id = dispatchThreadId.x;
+    if (id >= _ParticleCount) return;
+
+    Particle self = Particles[id];
+    float3 halfSize = _BoundsSize * 0.5f;
+    float3 minBound = _BoundsCenter - halfSize;
+    float3 maxBound = _BoundsCenter + halfSize;
+
+    if (self.position.x < minBound.x) { self.position.x = minBound.x; self.velocity.x *= -0.5f; }
+    else if (self.position.x > maxBound.x) { self.position.x = maxBound.x; self.velocity.x *= -0.5f; }
+
+    if (self.position.y < minBound.y) { self.position.y = minBound.y; self.velocity.y *= -0.5f; }
+    else if (self.position.y > maxBound.y) { self.position.y = maxBound.y; self.velocity.y *= -0.5f; }
+
+    if (self.position.z < minBound.z) { self.position.z = minBound.z; self.velocity.z *= -0.5f; }
+    else if (self.position.z > maxBound.z) { self.position.z = maxBound.z; self.velocity.z *= -0.5f; }
+
+    Particles[id] = self;
+}
+
+////////////////////////////////////
+// 7) Obstacle Collision Kernel
+////////////////////////////////////
+[numthreads(256, 1, 1)]
+void CS_ObstacleCollision(uint3 dispatchThreadId : SV_DispatchThreadID)
+{
+    uint id = dispatchThreadId.x;
+    if (id >= _ParticleCount) return;
+
+    Particle self = Particles[id];
+    float obstRadius = _ObstacleRadius;
+    float3 toParticle = self.position - _ObstaclePos;
+    float dist = length(toParticle);
+
+    if (dist < obstRadius + 0.001f && dist > 1e-6f)
+    {
+        float penetration = (obstRadius + 0.001f) - dist;
+        float3 normal = normalize(toParticle);
+        self.position += normal * penetration;
+        self.velocity = reflect(self.velocity, normal) * _ParticleCollisionDamping;
+    }
+    else if (dist < 1e-6f)
+    {
+        self.position += float3(0, obstRadius + 0.001f, 0);
+        self.velocity = reflect(self.velocity, float3(0, 1, 0)) * _ParticleCollisionDamping;
+    }
+
+    Particles[id] = self;
+}

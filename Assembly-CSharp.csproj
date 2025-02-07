@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Raymarching.compute" />
+    <None Include="Assets\ParticleRender.shader" />
     <None Include="Assets\SPHCompute.compute" />
   </ItemGroup>
   <ItemGroup>

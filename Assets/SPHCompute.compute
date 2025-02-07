@@ -10,6 +10,7 @@
 #pragma kernel CS_VV_FullStep
 #pragma kernel CS_Boundaries
 #pragma kernel CS_ObstacleCollision
+#pragma kernel CS_VelocityDamping
 
 // Define constants
 static const float PI = 3.14159265359;
@@ -529,3 +530,26 @@ void CS_ObstacleCollision(uint3 id : SV_DispatchThreadID)
 
     Particles[idx] = p;
 }
+
+[numthreads(256, 1, 1)]
+void CS_VelocityDamping(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= _ParticleCount) return;
+
+    Particle p = Particles[id.x];
+    float speed = length(p.velocity);
+
+    // If speed is below the threshold, zero the velocity
+    if (speed < 0.01)
+    {
+        p.velocity = float3(0.0, 0.0, 0.0);
+    }
+    else
+    {
+        // Otherwise, apply additional damping
+        p.velocity *= 0.98;
+    }
+
+    Particles[id.x] = p;
+}
+

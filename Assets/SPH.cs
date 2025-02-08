@@ -24,19 +24,6 @@ public class SPH : MonoBehaviour
     [Tooltip("Gravity constant (negative for downward).")]
     public float gravity = -9.81f;
 
-    [Header("Spatial Hashing Settings")]
-    [Tooltip("Resolution of the 3D grid used for spatial hashing (automatically set if autoAdjustSpatialHashing is true).")]
-    public Vector3Int gridResolution = new Vector3Int(64, 64, 64);
-
-    [Tooltip("Maximum particles per grid cell (automatically set if autoAdjustSpatialHashing is true).")]
-    public int maxParticlesPerCell = 100;
-
-    [Tooltip("Radius used to determine grid cell index (if zero or negative, it defaults to smoothingRadius).")]
-    public float neighborSearchRadius = 0.3f;
-
-    [Tooltip("Automatically adjust spatial hashing parameters based on boundary size and particle count.")]
-    public bool autoAdjustSpatialHashing = true;
-
     [Header("Time Settings")]
     [Tooltip("Base time step for the simulation.")]
     public float timeStep = 0.003f;
@@ -95,16 +82,10 @@ public class SPH : MonoBehaviour
         public float pressure;
     }
 
-    private ComputeBuffer particleBuffer;      // All particles
-    private ComputeBuffer gridBuffer;            // Stores up to maxParticlesPerCell indices per cell
-    private ComputeBuffer gridIndicesBuffer;     // Stores the count of particles in each cell
+    private ComputeBuffer particleBuffer;  // All particles
 
-    private int gridCellCount;
-
-    // Kernel indices
+    // Kernel indices (only those that do not rely on spatial hashing)
     private int kernel_Clear;
-    private int kernel_ClearGrid;
-    private int kernel_SpatialHash;
     private int kernel_DensityPressure;
     private int kernel_ComputeForces;
     private int kernel_XSPH;
@@ -112,7 +93,7 @@ public class SPH : MonoBehaviour
     private int kernel_VvFullStep;
     private int kernel_Boundaries;
     private int kernel_ObstacleCollision;
-    private int kernel_VelocityDamping;  // New kernel for additional velocity damping
+    private int kernel_VelocityDamping;
 
     // For dispatching compute threads
     private const int THREAD_GROUP_SIZE = 256;
@@ -122,26 +103,16 @@ public class SPH : MonoBehaviour
         // Optionally limit frame rate for consistency
         Application.targetFrameRate = 60;
 
-        // Automatically adjust spatial hashing parameters if enabled.
-        if (autoAdjustSpatialHashing)
-        {
-            AdjustSpatialHashingParameters();
-        }
-
         // 1) Initialize particles and GPU buffer
         CreateParticles();
 
-        // 2) Initialize the grid buffers (using the adjusted gridResolution and maxParticlesPerCell)
-        CreateGrid();
-
-        // 3) Get compute shader kernels and set simulation parameters
+        // 2) Get compute shader kernels and set simulation parameters
         GetKernelIDs();
         SetComputeParams();
 
-        // 4) Bind the buffers to all compute shader kernels
+        // 3) Bind the particle buffer to the compute shader and to the rendering material
         BindBuffers();
 
-        // Bind the particle buffer to the rendering material
         if (fluidMaterial != null)
         {
             fluidMaterial.SetBuffer("_ParticleBuffer", particleBuffer);
@@ -151,49 +122,33 @@ public class SPH : MonoBehaviour
 
     void Update()
     {
-        // Update dynamic parameters (e.g. obstacle position)
+        // update dynamic parameters)
         UpdateObstacle();
         SetComputeParams();
+
+        // Rebind the particle buffer for each kernel
+        BindBuffers();
 
         // Set sub-step time
         float dtSub = timeStep / subSteps;
         sphCompute.SetFloat("_DeltaTime", dtSub);
 
-        // 1) Clear the spatial grid
-        DispatchCompute(kernel_ClearGrid, gridCellCount);
-
-        // 2) Assign particles to grid cells via spatial hashing
-        DispatchCompute(kernel_SpatialHash, particleCount);
-
-        // 3) Run the multi-step solver
+        // Run the multi-step solver
         for (int i = 0; i < subSteps; i++)
         {
-            // 3a) Velocity Verlet half-step
             DispatchCompute(kernel_VvHalfStep, particleCount);
-
-            // 3b) Clear per-particle accumulators (acceleration, density, pressure)
             DispatchCompute(kernel_Clear, particleCount);
-
-            // 3c) Compute density and pressure for each particle
             DispatchCompute(kernel_DensityPressure, particleCount);
-
-            // 3d) Compute forces (pressure, viscosity, surface tension)
             DispatchCompute(kernel_ComputeForces, particleCount);
-
-            // 3e) XSPH velocity correction for smoothing
             DispatchCompute(kernel_XSPH, particleCount);
-
-            // 3f) Velocity Verlet full-step update
             DispatchCompute(kernel_VvFullStep, particleCount);
-
-            // 3g) Handle boundaries and obstacle collisions
             DispatchCompute(kernel_Boundaries, particleCount);
             DispatchCompute(kernel_ObstacleCollision, particleCount);
         }
 
-        // 4) Additional velocity damping to help particles settle
         DispatchCompute(kernel_VelocityDamping, particleCount);
     }
+
 
     // Render the particles on the GPU
     void OnRenderObject()
@@ -201,54 +156,19 @@ public class SPH : MonoBehaviour
         if (fluidMaterial != null)
         {
             fluidMaterial.SetPass(0);
-            // Draw all particles as points using a single draw call.
             Graphics.DrawProceduralNow(MeshTopology.Points, particleCount);
         }
     }
 
     private void OnDestroy()
     {
-        // Release all GPU buffers
+        // Release the GPU buffer
         particleBuffer?.Release();
-        gridBuffer?.Release();
-        gridIndicesBuffer?.Release();
-    }
-
-    // ------------------------------------------------------
-    // Spatial Hashing Auto-Adjustment
-    // ------------------------------------------------------
-    private void AdjustSpatialHashingParameters()
-    {
-        // Ensure neighborSearchRadius is valid; if not, default it to the smoothing radius.
-        float cellSize = (neighborSearchRadius > 0) ? neighborSearchRadius : smoothingRadius;
-
-        // Compute grid resolution as the number of cells needed along each axis
-        gridResolution = new Vector3Int(
-            Mathf.CeilToInt(boundsSize.x / cellSize),
-            Mathf.CeilToInt(boundsSize.y / cellSize),
-            Mathf.CeilToInt(boundsSize.z / cellSize)
-        );
-
-        // Total number of cells
-        gridCellCount = gridResolution.x * gridResolution.y * gridResolution.z;
-
-        // Estimate the average number of particles per cell.
-        float avgParticlesPerCell = particleCount / (float)gridCellCount;
-
-        // Set maxParticlesPerCell to be a safety multiplier
-        maxParticlesPerCell = Mathf.CeilToInt(avgParticlesPerCell * 25.0f);
-
-        Debug.Log($"[SPH] Auto-adjusted spatial hash parameters:\n" +
-                  $"  Cell Size: {cellSize}\n" +
-                  $"  Grid Resolution: {gridResolution} (Total cells: {gridCellCount})\n" +
-                  $"  Avg. Particles/Cell: {avgParticlesPerCell:F2}\n" +
-                  $"  Max Particles per Cell: {maxParticlesPerCell}");
     }
 
     // ------------------------------------------------------
     // Setup & Initialization Methods
     // ------------------------------------------------------
-
     private void CreateParticles()
     {
         // Create the GPU buffer for particles.
@@ -277,33 +197,9 @@ public class SPH : MonoBehaviour
         particleBuffer.SetData(particlesInit);
     }
 
-    private void CreateGrid()
-    {
-        gridCellCount = gridResolution.x * gridResolution.y * gridResolution.z;
-
-        // Create a grid buffer (each cell can hold up to maxParticlesPerCell particle indices).
-        gridBuffer = new ComputeBuffer(gridCellCount * maxParticlesPerCell, sizeof(int));
-
-        // Create a buffer for grid cell indices (counts for each cell).
-        gridIndicesBuffer = new ComputeBuffer(gridCellCount, sizeof(int));
-
-        // Initialize grid buffers on the CPU.
-        int[] gridData = new int[gridCellCount * maxParticlesPerCell];
-        for (int i = 0; i < gridData.Length; i++)
-            gridData[i] = -1;
-        gridBuffer.SetData(gridData);
-
-        int[] gridIndices = new int[gridCellCount];
-        for (int i = 0; i < gridIndices.Length; i++)
-            gridIndices[i] = 0;
-        gridIndicesBuffer.SetData(gridIndices);
-    }
-
     private void GetKernelIDs()
     {
         kernel_Clear = sphCompute.FindKernel("CS_Clear");
-        kernel_ClearGrid = sphCompute.FindKernel("CS_ClearGrid");
-        kernel_SpatialHash = sphCompute.FindKernel("CS_SpatialHash");
         kernel_DensityPressure = sphCompute.FindKernel("CS_DensityPressure");
         kernel_ComputeForces = sphCompute.FindKernel("CS_ComputeForces");
         kernel_XSPH = sphCompute.FindKernel("CS_XSPH");
@@ -311,19 +207,9 @@ public class SPH : MonoBehaviour
         kernel_VvFullStep = sphCompute.FindKernel("CS_VV_FullStep");
         kernel_Boundaries = sphCompute.FindKernel("CS_Boundaries");
         kernel_ObstacleCollision = sphCompute.FindKernel("CS_ObstacleCollision");
-        kernel_VelocityDamping = sphCompute.FindKernel("CS_VelocityDamping"); // New kernel
+        kernel_VelocityDamping = sphCompute.FindKernel("CS_VelocityDamping");
 
-        if (kernel_Clear == -1 || kernel_ClearGrid == -1 || kernel_SpatialHash == -1 ||
-            kernel_DensityPressure == -1 || kernel_ComputeForces == -1 || kernel_XSPH == -1 ||
-            kernel_VvHalfStep == -1 || kernel_VvFullStep == -1 || kernel_Boundaries == -1 ||
-            kernel_ObstacleCollision == -1 || kernel_VelocityDamping == -1)
-        {
-            Debug.LogError("One or more compute shader kernels were not found. Please check your kernel names.");
-        }
-        else
-        {
-            Debug.Log("Compute shader kernels found successfully.");
-        }
+        // Also, if a separate clear kernel exists, it should be found here.
     }
 
     private void SetComputeParams()
@@ -340,18 +226,11 @@ public class SPH : MonoBehaviour
         sphCompute.SetFloat("_ParticleCollisionDamping", particleCollisionDamping);
         sphCompute.SetFloat("_ObstacleRepulsionStiffness", obstacleRepulsionStiffness);
 
-        // Boundaries
         sphCompute.SetVector("_BoundsCenter", boundsCenter);
         sphCompute.SetVector("_BoundsSize", boundsSize);
 
-        // Spawn box
         sphCompute.SetVector("_SpawnCenter", spawnCenter);
         sphCompute.SetVector("_SpawnSize", spawnSize);
-
-        // Spatial hashing parameters
-        sphCompute.SetInt("_MaxParticlesPerCell", maxParticlesPerCell);
-        sphCompute.SetVector("_GridResolution", new Vector4(gridResolution.x, gridResolution.y, gridResolution.z, 0f));
-        sphCompute.SetFloat("_NeighborSearchRadius", neighborSearchRadius);
     }
 
     private void UpdateObstacle()
@@ -373,8 +252,6 @@ public class SPH : MonoBehaviour
     private void BindBuffers()
     {
         sphCompute.SetBuffer(kernel_Clear, "Particles", particleBuffer);
-        sphCompute.SetBuffer(kernel_ClearGrid, "Particles", particleBuffer);
-        sphCompute.SetBuffer(kernel_SpatialHash, "Particles", particleBuffer);
         sphCompute.SetBuffer(kernel_DensityPressure, "Particles", particleBuffer);
         sphCompute.SetBuffer(kernel_ComputeForces, "Particles", particleBuffer);
         sphCompute.SetBuffer(kernel_XSPH, "Particles", particleBuffer);
@@ -382,18 +259,7 @@ public class SPH : MonoBehaviour
         sphCompute.SetBuffer(kernel_VvFullStep, "Particles", particleBuffer);
         sphCompute.SetBuffer(kernel_Boundaries, "Particles", particleBuffer);
         sphCompute.SetBuffer(kernel_ObstacleCollision, "Particles", particleBuffer);
-        sphCompute.SetBuffer(kernel_VelocityDamping, "Particles", particleBuffer); // New kernel
-
-        sphCompute.SetBuffer(kernel_ClearGrid, "Grid", gridBuffer);
-        sphCompute.SetBuffer(kernel_ClearGrid, "GridIndices", gridIndicesBuffer);
-        sphCompute.SetBuffer(kernel_SpatialHash, "Grid", gridBuffer);
-        sphCompute.SetBuffer(kernel_SpatialHash, "GridIndices", gridIndicesBuffer);
-        sphCompute.SetBuffer(kernel_DensityPressure, "Grid", gridBuffer);
-        sphCompute.SetBuffer(kernel_DensityPressure, "GridIndices", gridIndicesBuffer);
-        sphCompute.SetBuffer(kernel_ComputeForces, "Grid", gridBuffer);
-        sphCompute.SetBuffer(kernel_ComputeForces, "GridIndices", gridIndicesBuffer);
-        sphCompute.SetBuffer(kernel_XSPH, "Grid", gridBuffer);
-        sphCompute.SetBuffer(kernel_XSPH, "GridIndices", gridIndicesBuffer);
+        sphCompute.SetBuffer(kernel_VelocityDamping, "Particles", particleBuffer);
     }
 
     private void DispatchCompute(int kernelID, int count)
@@ -408,7 +274,7 @@ public class SPH : MonoBehaviour
     }
 
     // ------------------------------------------------------------------
-    // Public Accessors for External Scripts (e.g., FluidRayMarching.cs)
+    // Public Accessors for External Scripts
     // ------------------------------------------------------------------
     public ComputeBuffer GetParticleBuffer()
     {

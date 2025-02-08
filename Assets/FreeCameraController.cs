@@ -2,30 +2,29 @@ using UnityEngine;
 
 public class FreeCameraController : MonoBehaviour
 {
-    // Public variables for easy adjustment in the Inspector
     [Header("Movement Settings")]
-    public float baseMoveSpeed = 10.0f;    // Normal movement speed
-    public float fastMoveSpeed = 80.0f;    // Movement speed when Shift is held down
-    public float lookSpeed = 2.0f;         // Mouse look speed
-    public float climbSpeed = 10.0f;       // Speed for vertical movement
+    public float baseMoveSpeed = 10.0f;
+    public float fastMoveSpeed = 80.0f;
+    public float lookSpeed = 2.0f;
+    public float climbSpeed = 10.0f;
 
-    private float moveSpeed;                // Current movement speed
-    private float yaw = 0.0f;               // Horizontal rotation
-    private float pitch = 0.0f;             // Vertical rotation
+    [Header("Rotation Settings")]
+    public float yaw = 90.0f;   // You can set an initial yaw here in the Inspector
+    public float pitch = 35.0f; // Vertical rotation
+
+    private float moveSpeed;
 
     void Start()
     {
-        // Initialize movement speed
         moveSpeed = baseMoveSpeed;
-
-        // Lock and hide the cursor for an immersive experience
+        // Optionally, initialize yaw based on the current transform if you want:
+        // yaw = transform.eulerAngles.y;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void Update()
     {
-        // Toggle cursor lock state with Escape key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ToggleCursorLock();
@@ -37,7 +36,6 @@ public class FreeCameraController : MonoBehaviour
 
     void HandleMovement()
     {
-        // Check if Shift key is held down for increased speed
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
             moveSpeed = fastMoveSpeed;
@@ -47,12 +45,10 @@ public class FreeCameraController : MonoBehaviour
             moveSpeed = baseMoveSpeed;
         }
 
-        // Gather input for movement
-        float moveForward = Input.GetAxis("Vertical");    // W/S or Up/Down arrows
-        float moveRight = Input.GetAxis("Horizontal");    // A/D or Left/Right arrows
+        float moveForward = Input.GetAxis("Vertical");
+        float moveRight = Input.GetAxis("Horizontal");
         float moveUp = 0.0f;
 
-        // Vertical movement controls: Space for up, Control for down
         if (Input.GetKey(KeyCode.Space))
         {
             moveUp += 1.0f;
@@ -62,31 +58,22 @@ public class FreeCameraController : MonoBehaviour
             moveUp -= 1.0f;
         }
 
-        // Calculate movement vector relative to camera orientation
-        Vector3 forwardMovement = transform.forward * moveForward;
-        Vector3 rightMovement = transform.right * moveRight;
-        Vector3 upMovement = transform.up * moveUp;
-
-        // Combine all movement vectors
-        Vector3 movement = (forwardMovement + rightMovement) * moveSpeed * Time.deltaTime;
-        movement += upMovement * climbSpeed * Time.deltaTime;
-
-        // Apply movement
+        Vector3 movement = (transform.forward * moveForward + transform.right * moveRight) * moveSpeed * Time.deltaTime;
+        movement += transform.up * moveUp * climbSpeed * Time.deltaTime;
         transform.position += movement;
     }
 
     void HandleRotation()
     {
-        // Gather mouse movement input
+        // Get mouse input for both axes
         float mouseX = Input.GetAxis("Mouse X") * lookSpeed;
         float mouseY = Input.GetAxis("Mouse Y") * lookSpeed;
 
-        // Accumulate rotation angles
-        yaw += mouseX;
+        // Update yaw and pitch
+        yaw += mouseX;   // This updates the Y axis rotation based on mouse movement.
         pitch -= mouseY;
-        pitch = Mathf.Clamp(pitch, -90f, 90f); // Prevent flipping
+        pitch = Mathf.Clamp(pitch, -90f, 90f);
 
-        // Apply rotation to the camera
         transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
     }
 

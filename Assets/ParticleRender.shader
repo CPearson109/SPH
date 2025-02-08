@@ -1,5 +1,4 @@
 // Upgrade NOTE: commented out 'float3 _WorldSpaceCameraPos', a built-in variable
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 Shader "Custom/ParticleSphere"
 {
@@ -28,9 +27,9 @@ Shader "Custom/ParticleSphere"
 
         #include "UnityCG.cginc"
 
-        //--------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
         // Data Structures & Uniforms
-        //--------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
         // This struct must match the one in your compute shader.
         struct Particle
         {
@@ -52,17 +51,14 @@ Shader "Custom/ParticleSphere"
     // Built-in camera position (set automatically by Unity)
     // float3 _WorldSpaceCameraPos;
 
-    //--------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
     // Vertex Shader
-    //--------------------------------------------------------------------------
-    // Input structure for the vertex shader.
+    //---------------------------------------------------------------------------
     struct appdata
     {
         uint vertexID : SV_VertexID;
     };
 
-    // Output of the vertex shader and input to the geometry shader.
-    // Note the semantics added (TEXCOORD0 and COLOR0).
     struct v2g
     {
         float3 worldPos : TEXCOORD0;
@@ -78,25 +74,20 @@ Shader "Custom/ParticleSphere"
         return o;
     }
 
-    //--------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
     // Geometry Shader
-    //--------------------------------------------------------------------------
-    // Output of the geometry shader (input to the fragment shader).
+    //---------------------------------------------------------------------------
     struct g2f
     {
         float4 pos : SV_POSITION;
-        float2 uv  : TEXCOORD0; // Ranges from (-1,-1) to (1,1) across the quad.
+        float2 uv  : TEXCOORD0; // Ranges from (-1,-1) to (1,1)
         fixed4 color : COLOR0;
     };
 
-    // Expand a point into a billboard quad.
     [maxvertexcount(6)]
     void geom(point v2g input[1], inout TriangleStream<g2f> triStream)
     {
-        // The particle's center in world space.
         float3 center = input[0].worldPos;
-
-        // Compute a billboard basis so the quad always faces the camera.
         float3 viewDir = normalize(center - _WorldSpaceCameraPos);
         float3 up = float3(0, 1, 0);
         if (abs(dot(up, viewDir)) > 0.99)
@@ -104,16 +95,13 @@ Shader "Custom/ParticleSphere"
         float3 right = normalize(cross(up, viewDir));
         up = cross(viewDir, right);
 
-        // Scale the basis vectors by the sphere radius.
         right *= _SphereRadius;
         up *= _SphereRadius;
 
-        // Compute four corner positions in world space.
-        // Also assign UV coordinates that span from (-1,-1) to (1,1).
-        float3 pos0 = center - right - up; // Bottom-left, uv = (-1, -1)
-        float3 pos1 = center - right + up; // Top-left,    uv = (-1,  1)
-        float3 pos2 = center + right + up; // Top-right,   uv = ( 1,  1)
-        float3 pos3 = center + right - up; // Bottom-right,uv = ( 1, -1)
+        float3 pos0 = center - right - up;
+        float3 pos1 = center - right + up;
+        float3 pos2 = center + right + up;
+        float3 pos3 = center + right - up;
 
         g2f o;
         o.color = input[0].color;
@@ -145,23 +133,17 @@ Shader "Custom/ParticleSphere"
         triStream.Append(o);
     }
 
-    //--------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
     // Fragment Shader
-    //--------------------------------------------------------------------------
-    // This fragment shader uses the UV coordinates to simulate a lit sphere.
+    //---------------------------------------------------------------------------
     fixed4 frag(g2f i) : SV_Target
     {
         float2 uv = i.uv;
-        // Discard fragments outside the circle (the sphere's silhouette).
         if (dot(uv, uv) > 1.0)
             discard;
 
-        // Compute the z coordinate on the sphere's surface (for a unit sphere in UV space).
         float z = sqrt(1.0 - dot(uv, uv));
-        // Reconstruct the normal vector.
         float3 normal = normalize(float3(uv.x, uv.y, z));
-
-        // Compute simple diffuse (Lambertian) lighting.
         float NdotL = saturate(dot(normal, normalize(_LightDir.xyz)));
         fixed4 col = i.color * (0.2 + 0.8 * NdotL);
         return col;

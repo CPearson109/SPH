@@ -71,6 +71,10 @@ public class SPH : MonoBehaviour
     [Tooltip("Main SPH compute (all kernels)")]
     public ComputeShader sphCompute;
 
+    [Header("Grid Settings")]
+    [Tooltip("Maximum number of particles allowed per grid cell.")]
+    public int maxParticlesPerCell = 100;
+
     // ----- Internal Buffers & Data Structures -----
     // Must match the struct in the compute shader.
     struct Particle
@@ -84,8 +88,19 @@ public class SPH : MonoBehaviour
 
     private ComputeBuffer particleBuffer;  // All particles
 
-    // Kernel indices (only those that do not rely on spatial hashing)
+    // Buffers for grid spatial hashing
+    private ComputeBuffer gridCountsBuffer;   // Holds particle counts per grid cell
+    private ComputeBuffer gridIndicesBuffer;  // Holds the indices of particles in each cell
+
+    // Grid parameters computed from simulation bounds and smoothing radius.
+    private int gridResolutionX, gridResolutionY, gridResolutionZ;
+    private int totalCells;
+    private Vector3 gridMin; // lower corner of simulation bounds
+
+    // Kernel indices
     private int kernel_Clear;
+    private int kernel_ClearGrid;
+    private int kernel_BuildGrid;
     private int kernel_DensityPressure;
     private int kernel_ComputeForces;
     private int kernel_XSPH;
@@ -106,11 +121,23 @@ public class SPH : MonoBehaviour
         // 1) Initialize particles and GPU buffer
         CreateParticles();
 
-        // 2) Get compute shader kernels and set simulation parameters
+        // 2) Compute grid resolution from bounds and smoothing radius.
+        Vector3 halfBounds = boundsSize * 0.5f;
+        gridMin = boundsCenter - halfBounds;
+        gridResolutionX = Mathf.CeilToInt(boundsSize.x / smoothingRadius);
+        gridResolutionY = Mathf.CeilToInt(boundsSize.y / smoothingRadius);
+        gridResolutionZ = Mathf.CeilToInt(boundsSize.z / smoothingRadius);
+        totalCells = gridResolutionX * gridResolutionY * gridResolutionZ;
+
+        // Create grid buffers:
+        gridCountsBuffer = new ComputeBuffer(totalCells, sizeof(int));
+        gridIndicesBuffer = new ComputeBuffer(totalCells * maxParticlesPerCell, sizeof(int));
+
+        // 3) Get compute shader kernels and set simulation parameters
         GetKernelIDs();
         SetComputeParams();
 
-        // 3) Bind the particle buffer to the compute shader and to the rendering material
+        // 4) Bind the particle and grid buffers to the compute shader and to the rendering material
         BindBuffers();
 
         if (fluidMaterial != null)
@@ -122,12 +149,16 @@ public class SPH : MonoBehaviour
 
     void Update()
     {
-        // update dynamic parameters)
+        // update dynamic parameters
         UpdateObstacle();
         SetComputeParams();
 
-        // Rebind the particle buffer for each kernel
+        // Rebind buffers (particle and grid) for each kernel
         BindBuffers();
+
+        // First, rebuild the spatial grid:
+        DispatchCompute(kernel_ClearGrid, totalCells);
+        DispatchCompute(kernel_BuildGrid, particleCount);
 
         // Set sub-step time
         float dtSub = timeStep / subSteps;
@@ -149,7 +180,6 @@ public class SPH : MonoBehaviour
         DispatchCompute(kernel_VelocityDamping, particleCount);
     }
 
-
     // Render the particles on the GPU
     void OnRenderObject()
     {
@@ -162,8 +192,10 @@ public class SPH : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Release the GPU buffer
+        // Release all GPU buffers
         particleBuffer?.Release();
+        gridCountsBuffer?.Release();
+        gridIndicesBuffer?.Release();
     }
 
     // ------------------------------------------------------
@@ -200,6 +232,8 @@ public class SPH : MonoBehaviour
     private void GetKernelIDs()
     {
         kernel_Clear = sphCompute.FindKernel("CS_Clear");
+        kernel_ClearGrid = sphCompute.FindKernel("CS_ClearGrid");
+        kernel_BuildGrid = sphCompute.FindKernel("CS_BuildGrid");
         kernel_DensityPressure = sphCompute.FindKernel("CS_DensityPressure");
         kernel_ComputeForces = sphCompute.FindKernel("CS_ComputeForces");
         kernel_XSPH = sphCompute.FindKernel("CS_XSPH");
@@ -208,8 +242,6 @@ public class SPH : MonoBehaviour
         kernel_Boundaries = sphCompute.FindKernel("CS_Boundaries");
         kernel_ObstacleCollision = sphCompute.FindKernel("CS_ObstacleCollision");
         kernel_VelocityDamping = sphCompute.FindKernel("CS_VelocityDamping");
-
-        // Also, if a separate clear kernel exists, it should be found here.
     }
 
     private void SetComputeParams()
@@ -231,6 +263,14 @@ public class SPH : MonoBehaviour
 
         sphCompute.SetVector("_SpawnCenter", spawnCenter);
         sphCompute.SetVector("_SpawnSize", spawnSize);
+
+        // Set grid parameters
+        sphCompute.SetInt("_GridResolutionX", gridResolutionX);
+        sphCompute.SetInt("_GridResolutionY", gridResolutionY);
+        sphCompute.SetInt("_GridResolutionZ", gridResolutionZ);
+        sphCompute.SetInt("_MaxParticlesPerCell", maxParticlesPerCell);
+        sphCompute.SetFloat("_CellSize", smoothingRadius);
+        sphCompute.SetVector("_MinBound", gridMin);
     }
 
     private void UpdateObstacle()
@@ -251,7 +291,9 @@ public class SPH : MonoBehaviour
 
     private void BindBuffers()
     {
+        // Bind the particle buffer to all kernels.
         sphCompute.SetBuffer(kernel_Clear, "Particles", particleBuffer);
+        sphCompute.SetBuffer(kernel_BuildGrid, "Particles", particleBuffer);
         sphCompute.SetBuffer(kernel_DensityPressure, "Particles", particleBuffer);
         sphCompute.SetBuffer(kernel_ComputeForces, "Particles", particleBuffer);
         sphCompute.SetBuffer(kernel_XSPH, "Particles", particleBuffer);
@@ -260,6 +302,17 @@ public class SPH : MonoBehaviour
         sphCompute.SetBuffer(kernel_Boundaries, "Particles", particleBuffer);
         sphCompute.SetBuffer(kernel_ObstacleCollision, "Particles", particleBuffer);
         sphCompute.SetBuffer(kernel_VelocityDamping, "Particles", particleBuffer);
+
+        // Bind grid buffers where needed.
+        sphCompute.SetBuffer(kernel_ClearGrid, "GridCounts", gridCountsBuffer);
+        sphCompute.SetBuffer(kernel_BuildGrid, "GridCounts", gridCountsBuffer);
+        sphCompute.SetBuffer(kernel_BuildGrid, "GridIndices", gridIndicesBuffer);
+        sphCompute.SetBuffer(kernel_DensityPressure, "GridCounts", gridCountsBuffer);
+        sphCompute.SetBuffer(kernel_DensityPressure, "GridIndices", gridIndicesBuffer);
+        sphCompute.SetBuffer(kernel_ComputeForces, "GridCounts", gridCountsBuffer);
+        sphCompute.SetBuffer(kernel_ComputeForces, "GridIndices", gridIndicesBuffer);
+        sphCompute.SetBuffer(kernel_XSPH, "GridCounts", gridCountsBuffer);
+        sphCompute.SetBuffer(kernel_XSPH, "GridIndices", gridIndicesBuffer);
     }
 
     private void DispatchCompute(int kernelID, int count)

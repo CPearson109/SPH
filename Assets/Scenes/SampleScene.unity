@@ -428,26 +428,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dd2fa90653633943ac9050adddb5336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleCount: 30000
-  particleMass: 0.03
-  restDensity: 6
-  stiffness: 60
-  viscosity: 0.01
+  particleCount: 50000
+  particleMass: 0.02
+  restDensity: 10
+  stiffness: 40
+  viscosity: 0.1
   smoothingRadius: 0.4
   gravity: -9.81
   timeStep: 0.02
   subSteps: 1
-  surfaceTensionCoefficient: 1
+  surfaceTensionCoefficient: 0.1
   xsphEpsilon: 0.6
   boundsCenter: {x: 0, y: 5, z: 0}
   boundsSize: {x: 5, y: 10, z: 10}
-  spawnCenter: {x: 0, y: 5, z: 2.5}
-  spawnSize: {x: 3, y: 4, z: -2.5}
+  spawnCenter: {x: 0, y: 5, z: 0}
+  spawnSize: {x: 5, y: 5, z: 5}
   obstacleCollider: {fileID: 1776656040}
   obstacleRepulsionStiffness: 5000
   particleCollisionDamping: 1
   fluidMaterial: {fileID: 2100000, guid: b7b5f681536531c4ea6a8066995a1e14, type: 2}
   sphCompute: {fileID: 7200000, guid: 0e803cd39b0285949a31f4a2c4db0a3a, type: 3}
+  maxParticlesPerCell: 100
 --- !u!1 &1776656038
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,7 +551,7 @@ Transform:
   m_GameObject: {fileID: 1776656038}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.26, y: 0, z: -12.13}
+  m_LocalPosition: {x: 5.45, y: 0, z: -16.14}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []

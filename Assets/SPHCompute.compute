@@ -1,3 +1,5 @@
+﻿// SPHCompute.compute
+
 // Each #pragma kernel line tells Unity about a kernel entry point.
 #pragma kernel CS_Clear
 #pragma kernel CS_ClearGrid
@@ -39,7 +41,7 @@ RWStructuredBuffer<Particle> Particles;
 
 // Grid buffers for spatial hashing:
 RWStructuredBuffer<int> GridCounts;   // Array of length (gridResolutionX * gridResolutionY * gridResolutionZ)
-RWStructuredBuffer<int> GridIndices;  // Array of length (totalCells * _MaxParticlesPerCell)
+RWStructuredBuffer<int> GridIndices;    // Array of length (totalCells * _MaxParticlesPerCell)
 
 // --------------------------------------------------------------------
 // Simulation Parameters
@@ -72,6 +74,11 @@ cbuffer SimulationParams
     int _MaxParticlesPerCell;
     float _CellSize;
     float3 _MinBound;
+
+    // Oriented boundary parameters (sent from C# when a boundary cube is assigned)
+    float4x4 _BoundaryMatrix;
+    float4x4 _BoundaryInvMatrix;  // Precomputed inverse (world-to-local)
+    float3 _BoundaryHalfExtents;
 }
 
 // --------------------------------------------------------------------
@@ -82,7 +89,7 @@ cbuffer SimulationParams
 void CS_Clear(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
-    if (idx >= _ParticleCount) return;
+    if (idx >= (uint)_ParticleCount) return;
 
     Particle p = Particles[idx];
     p.acceleration = 0.0;
@@ -100,7 +107,7 @@ void CS_ClearGrid(uint3 id : SV_DispatchThreadID)
 {
     uint cellIndex = id.x;
     int totalCells = _GridResolutionX * _GridResolutionY * _GridResolutionZ;
-    if (cellIndex >= totalCells) return;
+    if (cellIndex >= (uint)totalCells) return;
     GridCounts[cellIndex] = 0;
 }
 
@@ -112,13 +119,15 @@ void CS_ClearGrid(uint3 id : SV_DispatchThreadID)
 void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
-    if (idx >= _ParticleCount) return;
+    if (idx >= (uint)_ParticleCount) return;
+
     Particle p = Particles[idx];
     float3 pos = p.position;
     int3 cellCoord = int3(floor((pos - _MinBound) / _CellSize));
-    // Clamp to valid grid coordinates
-    cellCoord = clamp(cellCoord, int3(0,0,0), int3(_GridResolutionX - 1, _GridResolutionY - 1, _GridResolutionZ - 1));
+    // Clamp to valid grid coordinates.
+    cellCoord = clamp(cellCoord, int3(0, 0, 0), int3(_GridResolutionX - 1, _GridResolutionY - 1, _GridResolutionZ - 1));
     int cellIndex = cellCoord.x + cellCoord.y * _GridResolutionX + cellCoord.z * _GridResolutionX * _GridResolutionY;
+
     uint count;
     InterlockedAdd(GridCounts[cellIndex], 1, count);
     if (count < _MaxParticlesPerCell)
@@ -136,7 +145,7 @@ void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
 void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
-    if (idx >= _ParticleCount) return;
+    if (idx >= (uint)_ParticleCount) return;
 
     Particle self = Particles[idx];
     float h = _SmoothingRadius;
@@ -189,7 +198,7 @@ void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
 void CS_ComputeForces(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
-    if (idx >= _ParticleCount) return;
+    if (idx >= (uint)_ParticleCount) return;
 
     Particle self = Particles[idx];
     float densitySelf = self.density;
@@ -259,7 +268,7 @@ void CS_ComputeForces(uint3 id : SV_DispatchThreadID)
 void CS_XSPH(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
-    if (idx >= _ParticleCount) return;
+    if (idx >= (uint)_ParticleCount) return;
 
     Particle self = Particles[idx];
     float h = _SmoothingRadius;
@@ -318,7 +327,7 @@ void CS_XSPH(uint3 id : SV_DispatchThreadID)
 void CS_VV_HalfStep(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
-    if (idx >= _ParticleCount) return;
+    if (idx >= (uint)_ParticleCount) return;
 
     Particle p = Particles[idx];
     p.velocity += 0.5 * _DeltaTime * p.acceleration;
@@ -334,93 +343,141 @@ void CS_VV_HalfStep(uint3 id : SV_DispatchThreadID)
 void CS_VV_FullStep(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
-    if (idx >= _ParticleCount) return;
+    if (idx >= (uint)_ParticleCount) return;
 
     Particle p = Particles[idx];
     p.velocity += 0.5 * _DeltaTime * p.acceleration;
     Particles[idx] = p;
 }
 
+
 // --------------------------------------------------------------------
 // KERNEL: CS_Boundaries
-// Bounce particles off the boundaries with a small random tangential offset.
+// Bounce particles off the boundaries.
+// Uses an oriented boundary if _BoundaryHalfExtents is non-zero,
+// otherwise falls back to the axis–aligned boundary.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_Boundaries(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
-    if (idx >= _ParticleCount) return;
+    if (idx >= (uint)_ParticleCount) return;
 
     Particle p = Particles[idx];
-    float3 halfSize = _BoundsSize * 0.5;
-    float3 minBound = _BoundsCenter - halfSize;
-    float3 maxBound = _BoundsCenter + halfSize;
-    
-    float velocityDamping = 0.9;
-    float offset = 1e-3; // small offset to break alignment
 
-    // X-axis
-    if (p.position.x < minBound.x)
+    // If an oriented boundary is provided (non-zero half-extents), use it.
+    if (length(_BoundaryHalfExtents) > 0.001)
     {
-        float angle = rand(float2(p.position.y, p.position.z)) * 6.28318530718;
-        float2 tangentOffset = float2(cos(angle), sin(angle)) * offset;
-        p.position.x = minBound.x;
-        p.position.y += tangentOffset.x;
-        p.position.z += tangentOffset.y;
-        if (p.velocity.x < 0) p.velocity.x = -p.velocity.x * velocityDamping;
+        // Transform the particle's world position into the boundary's local space.
+        float4 localPos4 = mul(_BoundaryInvMatrix, float4(p.position, 1.0));
+        float3 localPos = localPos4.xyz;
+
+        // The unit cube extends from -0.5 to +0.5 on each axis.
+        float3 E = float3(0.5, 0.5, 0.5); // fixed for a unit cube collision volume
+        float3 penetration = float3(0.0, 0.0, 0.0);
+        bool collided = false;
+
+        // Check each axis and compute penetration.
+        if (localPos.x < -E.x)
+        {
+            penetration.x = -E.x - localPos.x;
+            localPos.x = -E.x;
+            collided = true;
+        }
+        else if (localPos.x > E.x)
+        {
+            penetration.x = localPos.x - E.x;
+            localPos.x = E.x;
+            collided = true;
+        }
+        if (localPos.y < -E.y)
+        {
+            penetration.y = -E.y - localPos.y;
+            localPos.y = -E.y;
+            collided = true;
+        }
+        else if (localPos.y > E.y)
+        {
+            penetration.y = localPos.y - E.y;
+            localPos.y = E.y;
+            collided = true;
+        }
+        if (localPos.z < -E.z)
+        {
+            penetration.z = -E.z - localPos.z;
+            localPos.z = -E.z;
+            collided = true;
+        }
+        else if (localPos.z > E.z)
+        {
+            penetration.z = localPos.z - E.z;
+            localPos.z = E.z;
+            collided = true;
+        }
+
+        if (collided)
+        {
+            // Transform corrected local position back to world space.
+            float4 worldPos = mul(_BoundaryMatrix, float4(localPos, 1.0));
+            p.position = worldPos.xyz;
+
+            // Instead of completely inverting velocity,
+            // blend (lerp) the velocity with its negative using a restitution factor.
+            // Lower restitution makes the collision less bouncy.
+            float restitutionFactor = 0.3; // adjust between 0 (no bounce) and 1 (full bounce)
+            if (penetration.x > 0.0)
+                p.velocity.x = lerp(p.velocity.x, -p.velocity.x, restitutionFactor);
+            if (penetration.y > 0.0)
+                p.velocity.y = lerp(p.velocity.y, -p.velocity.y, restitutionFactor);
+            if (penetration.z > 0.0)
+                p.velocity.z = lerp(p.velocity.z, -p.velocity.z, restitutionFactor);
+        }
     }
-    else if (p.position.x > maxBound.x)
+    else
     {
-        float angle = rand(float2(p.position.y, p.position.z)) * 6.28318530718;
-        float2 tangentOffset = float2(cos(angle), sin(angle)) * offset;
-        p.position.x = maxBound.x;
-        p.position.y += tangentOffset.x;
-        p.position.z += tangentOffset.y;
-        if (p.velocity.x > 0) p.velocity.x = -p.velocity.x * velocityDamping;
+        // Fallback: axis-aligned collision (unchanged).
+        float3 halfSize = _BoundsSize * 0.5;
+        float3 minBound = _BoundsCenter - halfSize;
+        float3 maxBound = _BoundsCenter + halfSize;
+        float velocityDamping = 0.9;
+        float offset = 1e-3;
+
+        if (p.position.x < minBound.x)
+        {
+            p.position.x = minBound.x;
+            if (p.velocity.x < 0) p.velocity.x = -p.velocity.x * velocityDamping;
+        }
+        else if (p.position.x > maxBound.x)
+        {
+            p.position.x = maxBound.x;
+            if (p.velocity.x > 0) p.velocity.x = -p.velocity.x * velocityDamping;
+        }
+        if (p.position.y < minBound.y)
+        {
+            p.position.y = minBound.y;
+            if (p.velocity.y < 0) p.velocity.y = -p.velocity.y * velocityDamping;
+        }
+        else if (p.position.y > maxBound.y)
+        {
+            p.position.y = maxBound.y;
+            if (p.velocity.y > 0) p.velocity.y = -p.velocity.y * velocityDamping;
+        }
+        if (p.position.z < minBound.z)
+        {
+            p.position.z = minBound.z;
+            if (p.velocity.z < 0) p.velocity.z = -p.velocity.z * velocityDamping;
+        }
+        else if (p.position.z > maxBound.z)
+        {
+            p.position.z = maxBound.z;
+            if (p.velocity.z > 0) p.velocity.z = -p.velocity.z * velocityDamping;
+        }
     }
 
-    // Y-axis
-    if (p.position.y < minBound.y)
-    {
-        float angle = rand(float2(p.position.x, p.position.z)) * 6.28318530718;
-        float2 tangentOffset = float2(cos(angle), sin(angle)) * offset;
-        p.position.y = minBound.y;
-        p.position.x += tangentOffset.x;
-        p.position.z += tangentOffset.y;
-        if (p.velocity.y < 0) p.velocity.y = -p.velocity.y * velocityDamping;
-    }
-    else if (p.position.y > maxBound.y)
-    {
-        float angle = rand(float2(p.position.x, p.position.z)) * 6.28318530718;
-        float2 tangentOffset = float2(cos(angle), sin(angle)) * offset;
-        p.position.y = maxBound.y;
-        p.position.x += tangentOffset.x;
-        p.position.z += tangentOffset.y;
-        if (p.velocity.y > 0) p.velocity.y = -p.velocity.y * velocityDamping;
-    }
-
-    // Z-axis
-    if (p.position.z < minBound.z)
-    {
-        float angle = rand(float2(p.position.x, p.position.y)) * 6.28318530718;
-        float2 tangentOffset = float2(cos(angle), sin(angle)) * offset;
-        p.position.z = minBound.z;
-        p.position.x += tangentOffset.x;
-        p.position.y += tangentOffset.y;
-        if (p.velocity.z < 0) p.velocity.z = -p.velocity.z * velocityDamping;
-    }
-    else if (p.position.z > maxBound.z)
-    {
-        float angle = rand(float2(p.position.x, p.position.y)) * 6.28318530718;
-        float2 tangentOffset = float2(cos(angle), sin(angle)) * offset;
-        p.position.z = maxBound.z;
-        p.position.x += tangentOffset.x;
-        p.position.y += tangentOffset.y;
-        if (p.velocity.z > 0) p.velocity.z = -p.velocity.z * velocityDamping;
-    }
-    
     Particles[idx] = p;
 }
+
+
 
 // --------------------------------------------------------------------
 // KERNEL: CS_ObstacleCollision
@@ -430,7 +487,7 @@ void CS_Boundaries(uint3 id : SV_DispatchThreadID)
 void CS_ObstacleCollision(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
-    if (idx >= _ParticleCount) return;
+    if (idx >= (uint)_ParticleCount) return;
 
     Particle p = Particles[idx];
     float obstRadius = _ObstacleRadius;
@@ -462,7 +519,7 @@ void CS_ObstacleCollision(uint3 id : SV_DispatchThreadID)
 void CS_VelocityDamping(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
-    if (idx >= _ParticleCount) return;
+    if (idx >= (uint)_ParticleCount) return;
 
     Particle p = Particles[idx];
     float speed = length(p.velocity);

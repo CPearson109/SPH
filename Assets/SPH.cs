@@ -51,7 +51,7 @@ public class SPH : MonoBehaviour
     [Tooltip("Repulsion stiffness for obstacle collisions.")]
     public float obstacleRepulsionStiffness = 5000f;
     [Tooltip("Velocity damping factor when colliding with obstacles.")]
-    public float particleCollisionDamping = 0.98f;
+    public float particleCollisionDamping = 0.999f;
 
     [Header("Rendering Settings")]
     [Tooltip("Material for rendering the fluid (uses the GPU particle shader).")]

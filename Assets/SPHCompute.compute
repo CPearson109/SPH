@@ -80,7 +80,7 @@ cbuffer SimulationParams
 // --------------------------------------------------------------------
 // KERNEL: CS_Clear
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_Clear(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
@@ -95,7 +95,7 @@ void CS_Clear(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_ClearGrid
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_ClearGrid(uint3 id : SV_DispatchThreadID)
 {
     uint cellIndex = id.x;
@@ -107,7 +107,7 @@ void CS_ClearGrid(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_BuildGrid
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
@@ -131,7 +131,7 @@ void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_DensityPressure
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
@@ -184,7 +184,7 @@ void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
 // KERNEL: CS_ComputeForces
 // Revised pressure force using a symmetric formulation.
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_ComputeForces(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
@@ -252,7 +252,7 @@ void CS_ComputeForces(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_XSPH
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_XSPH(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
@@ -310,7 +310,7 @@ void CS_XSPH(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_VV_HalfStep
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_VV_HalfStep(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
@@ -325,7 +325,7 @@ void CS_VV_HalfStep(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_VV_FullStep
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_VV_FullStep(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
@@ -340,7 +340,7 @@ void CS_VV_FullStep(uint3 id : SV_DispatchThreadID)
 // KERNEL: CS_Boundaries
 // Revised boundary collision with normal/tangent decomposition.
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_Boundaries(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
@@ -409,8 +409,8 @@ void CS_Boundaries(uint3 id : SV_DispatchThreadID)
             // Transform local normal to world space
             float3 worldNormal = normalize(mul((float3x3)_BoundaryMatrix, localNormal));
 
-            float restitutionFactor = 0.8;
-            float frictionFactor = 0.1;
+            float restitutionFactor = 0.1;
+            float frictionFactor = 0.0;
 
             float3 vNormal = dot(p.velocity, worldNormal) * worldNormal;
             float3 vTangent = p.velocity - vNormal;
@@ -467,7 +467,7 @@ void CS_Boundaries(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_ObstacleCollision
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_ObstacleCollision(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
@@ -498,7 +498,7 @@ void CS_ObstacleCollision(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_VelocityDamping
 // --------------------------------------------------------------------
-[numthreads(256, 1, 1)]
+[numthreads(1024, 1, 1)]
 void CS_VelocityDamping(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
@@ -506,13 +506,13 @@ void CS_VelocityDamping(uint3 id : SV_DispatchThreadID)
 
     Particle p = Particles[idx];
     float speed = length(p.velocity);
-    if (speed < 0.01)
+    if (speed < 0.2)
     {
-        p.velocity = float3(0.0, 0.0, 0.0);
+        p.velocity *= 0.9;
     }
     else
     {
-        p.velocity *= 0.98;
+        p.velocity *= 0.999;
     }
     Particles[idx] = p;
 }

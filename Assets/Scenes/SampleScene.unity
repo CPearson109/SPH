@@ -413,8 +413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6066f8eb70b39474792468eb6f155b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleCount: 300000
-  spawnSize: {x: 4, y: 4, z: 4}
+  particleCount: 100000
+  spawnSize: {x: 5, y: 10, z: 5}
 --- !u!4 &1237233260
 Transform:
   m_ObjectHideFlags: 0
@@ -424,9 +424,9 @@ Transform:
   m_GameObject: {fileID: 1237233258}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 1.3858, y: 1.3858, z: 1.3858}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleMass: 0.2
   restDensity: 20
-  soundSpeed: 20
+  soundSpeed: 10
   gamma: 3
   stiffness: 10
   viscosity: 0.1
@@ -793,8 +793,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 20}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 15, y: 20, z: 15}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

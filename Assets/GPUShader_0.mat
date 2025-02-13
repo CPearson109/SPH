@@ -75,7 +75,7 @@ Material:
     - _PointSize: 100
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SphereRadius: 0.06
+    - _SphereRadius: 0.08
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1

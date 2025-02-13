@@ -3,16 +3,21 @@
 public class SPH : MonoBehaviour
 {
     [Header("Particle Settings")]
-    [Tooltip("Mass of each particle.")]
-    public float particleMass = 0.8f;
+    [Tooltip("Mass of each particle. Derived from desired spacing and rest density.")]
+    public float particleMass = 0.03f;  // Lower mass helps keep densities in check.
     [Tooltip("Rest (target) density of the fluid.")]
     public float restDensity = 1000f;
-    [Tooltip("Stiffness factor (bulk modulus).")]
-    public float stiffness = 5000f;
+    // The Tait equation parameters:
+    [Tooltip("Speed of sound in the fluid (affects compressibility).")]
+    public float soundSpeed = 20f;
+    [Tooltip("Gamma exponent for the Tait equation (typically ~7).")]
+    public float gamma = 7f;
+    [Tooltip("Stiffness factor is no longer used; pressure is computed using the Tait equation.")]
+    public float stiffness = 800f;  // (Not used now; kept for legacy/debug purposes)
     [Tooltip("Viscosity coefficient.")]
     public float viscosity = 0.1f;
-    [Tooltip("Smoothing (kernel) radius used for neighbor interactions.")]
-    public float smoothingRadius = 0.3f;
+    [Tooltip("Smoothing (kernel) radius used for neighbor interactions. Should be ~1.3-2x the particle spacing.")]
+    public float smoothingRadius = 0.2f;
     [Tooltip("Gravity constant (negative for downward).")]
     public float gravity = -9.81f;
 
@@ -24,7 +29,7 @@ public class SPH : MonoBehaviour
 
     [Header("Surface Tension")]
     [Tooltip("Coefficient for surface tension forces.")]
-    public float surfaceTensionCoefficient = 0.1f;
+    public float surfaceTensionCoefficient = 0.03f;
 
     [Header("XSPH Settings")]
     [Tooltip("Epsilon for XSPH velocity smoothing.")]
@@ -37,8 +42,7 @@ public class SPH : MonoBehaviour
     public Vector3 boundsSize = new Vector3(10f, 10f, 10f);
 
     [Header("Boundary Cube")]
-    [Tooltip("Assign a 3D object (e.g., a cube) whose edges define the simulation boundary. " +
-             "When this object is moved/rotated/scaled at runtime, the particles will follow.")]
+    [Tooltip("Assign a 3D object (e.g., a cube) whose edges define the simulation boundary.")]
     public Transform boundaryCube;
 
     [Header("Obstacle Settings")]
@@ -78,16 +82,16 @@ public class SPH : MonoBehaviour
         public float pressure;
     }
 
-    private ComputeBuffer particleBuffer;    // Buffer containing all particles.
-    private ComputeBuffer gridCountsBuffer;    // Buffer holding particle counts per grid cell.
-    private ComputeBuffer gridIndicesBuffer;   // Buffer holding particle indices per grid cell.
+    private ComputeBuffer particleBuffer;
+    private ComputeBuffer gridCountsBuffer;
+    private ComputeBuffer gridIndicesBuffer;
 
-    // Grid parameters computed from the fallback axis–aligned boundary.
+    // Grid parameters.
     private int gridResolutionX, gridResolutionY, gridResolutionZ;
     private int totalCells;
-    private Vector3 gridMin; // Lower corner of the fallback boundary.
+    private Vector3 gridMin;
 
-    // Kernel indices (set by FindKernel; names must match exactly).
+    // Kernel indices.
     private int kernel_Clear;
     private int kernel_ClearGrid;
     private int kernel_BuildGrid;
@@ -100,33 +104,26 @@ public class SPH : MonoBehaviour
     private int kernel_ObstacleCollision;
     private int kernel_VelocityDamping;
 
-    // Thread group size: must match [numthreads(256,1,1)] in the compute shader.
     private const int THREAD_GROUP_SIZE = 256;
-
-    // Total number of particles.
     private int particleCount;
 
     void Start()
     {
         Application.targetFrameRate = 60;
 
-        // If no spawn boxes are assigned, try to find them automatically.
         if (spawnBoxes == null || spawnBoxes.Length == 0)
         {
             spawnBoxes = FindObjectsOfType<SpawnBox>();
         }
 
-        // Sum particle counts from all spawn boxes.
         particleCount = 0;
         foreach (var sb in spawnBoxes)
         {
             particleCount += sb.particleCount;
         }
 
-        // 1) Initialize particles and create the GPU buffer.
         CreateParticles();
 
-        // 2) Compute grid resolution using the fallback bounds and smoothing radius.
         Vector3 halfBounds = boundsSize * 0.5f;
         gridMin = boundsCenter - halfBounds;
         gridResolutionX = Mathf.CeilToInt(boundsSize.x / smoothingRadius);
@@ -134,15 +131,11 @@ public class SPH : MonoBehaviour
         gridResolutionZ = Mathf.CeilToInt(boundsSize.z / smoothingRadius);
         totalCells = gridResolutionX * gridResolutionY * gridResolutionZ;
 
-        // Create grid buffers.
         gridCountsBuffer = new ComputeBuffer(totalCells, sizeof(int));
         gridIndicesBuffer = new ComputeBuffer(totalCells * maxParticlesPerCell, sizeof(int));
 
-        // 3) Get the kernel IDs and set simulation parameters.
         GetKernelIDs();
         SetComputeParams();
-
-        // 4) Bind the particle and grid buffers.
         BindBuffers();
         if (fluidMaterial != null)
         {
@@ -153,20 +146,67 @@ public class SPH : MonoBehaviour
 
     void Update()
     {
-        // Update dynamic parameters (such as the obstacle and boundary transforms).
+        // Update grid parameters from boundary cube’s AABB.
+        if (boundaryCube != null)
+        {
+            Vector3[] corners = new Vector3[8];
+            corners[0] = boundaryCube.TransformPoint(new Vector3(-0.5f, -0.5f, -0.5f));
+            corners[1] = boundaryCube.TransformPoint(new Vector3(0.5f, -0.5f, -0.5f));
+            corners[2] = boundaryCube.TransformPoint(new Vector3(0.5f, -0.5f, 0.5f));
+            corners[3] = boundaryCube.TransformPoint(new Vector3(-0.5f, -0.5f, 0.5f));
+            corners[4] = boundaryCube.TransformPoint(new Vector3(-0.5f, 0.5f, -0.5f));
+            corners[5] = boundaryCube.TransformPoint(new Vector3(0.5f, 0.5f, -0.5f));
+            corners[6] = boundaryCube.TransformPoint(new Vector3(0.5f, 0.5f, 0.5f));
+            corners[7] = boundaryCube.TransformPoint(new Vector3(-0.5f, 0.5f, 0.5f));
+
+            Vector3 newMin = corners[0], newMax = corners[0];
+            for (int i = 1; i < 8; i++)
+            {
+                newMin = Vector3.Min(newMin, corners[i]);
+                newMax = Vector3.Max(newMax, corners[i]);
+            }
+
+            Vector3 newBoundsSize = newMax - newMin;
+            Vector3 newBoundsCenter = (newMin + newMax) * 0.5f;
+            gridMin = newMin;
+
+            int newGridResolutionX = Mathf.CeilToInt(newBoundsSize.x / smoothingRadius);
+            int newGridResolutionY = Mathf.CeilToInt(newBoundsSize.y / smoothingRadius);
+            int newGridResolutionZ = Mathf.CeilToInt(newBoundsSize.z / smoothingRadius);
+            int newTotalCells = newGridResolutionX * newGridResolutionY * newGridResolutionZ;
+
+            if (newTotalCells != totalCells)
+            {
+                gridCountsBuffer.Release();
+                gridIndicesBuffer.Release();
+                gridCountsBuffer = new ComputeBuffer(newTotalCells, sizeof(int));
+                gridIndicesBuffer = new ComputeBuffer(newTotalCells * maxParticlesPerCell, sizeof(int));
+                totalCells = newTotalCells;
+            }
+
+            gridResolutionX = newGridResolutionX;
+            gridResolutionY = newGridResolutionY;
+            gridResolutionZ = newGridResolutionZ;
+
+            sphCompute.SetInt("_GridResolutionX", gridResolutionX);
+            sphCompute.SetInt("_GridResolutionY", gridResolutionY);
+            sphCompute.SetInt("_GridResolutionZ", gridResolutionZ);
+            sphCompute.SetVector("_MinBound", gridMin);
+
+            boundsCenter = newBoundsCenter;
+            boundsSize = newBoundsSize;
+        }
+
         UpdateObstacle();
         SetComputeParams();
         BindBuffers();
 
-        // Rebuild the spatial grid.
         DispatchCompute(kernel_ClearGrid, totalCells);
         DispatchCompute(kernel_BuildGrid, particleCount);
 
-        // Set sub-step time.
         float dtSub = timeStep / subSteps;
         sphCompute.SetFloat("_DeltaTime", dtSub);
 
-        // Run the multi-step solver.
         for (int i = 0; i < subSteps; i++)
         {
             DispatchCompute(kernel_VvHalfStep, particleCount);
@@ -181,7 +221,6 @@ public class SPH : MonoBehaviour
         DispatchCompute(kernel_VelocityDamping, particleCount);
     }
 
-    // Render the particles using the GPU.
     void OnRenderObject()
     {
         if (fluidMaterial != null)
@@ -198,20 +237,17 @@ public class SPH : MonoBehaviour
         gridIndicesBuffer?.Release();
     }
 
-    // Use Gizmos to visualize the simulation boundary.
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         if (boundaryCube != null)
         {
-            // Draw a unit cube (centered at the origin) transformed by the boundaryCube's matrix.
             Gizmos.matrix = boundaryCube.localToWorldMatrix;
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
             Gizmos.matrix = Matrix4x4.identity;
         }
         else
         {
-            // Fallback: Draw the axis–aligned boundary.
             Gizmos.DrawWireCube(boundsCenter, boundsSize);
         }
     }
@@ -250,7 +286,6 @@ public class SPH : MonoBehaviour
 
     private void GetKernelIDs()
     {
-        // The kernel names here must match exactly those in the compute shader.
         kernel_Clear = sphCompute.FindKernel("CS_Clear");
         kernel_ClearGrid = sphCompute.FindKernel("CS_ClearGrid");
         kernel_BuildGrid = sphCompute.FindKernel("CS_BuildGrid");
@@ -263,7 +298,6 @@ public class SPH : MonoBehaviour
         kernel_ObstacleCollision = sphCompute.FindKernel("CS_ObstacleCollision");
         kernel_VelocityDamping = sphCompute.FindKernel("CS_VelocityDamping");
 
-        // Log the kernel IDs for debugging.
         Debug.Log("Kernel CS_Clear: " + kernel_Clear);
         Debug.Log("Kernel CS_ClearGrid: " + kernel_ClearGrid);
         Debug.Log("Kernel CS_BuildGrid: " + kernel_BuildGrid);
@@ -282,7 +316,11 @@ public class SPH : MonoBehaviour
         sphCompute.SetInt("_ParticleCount", particleCount);
         sphCompute.SetFloat("_ParticleMass", particleMass);
         sphCompute.SetFloat("_RestDensity", restDensity);
-        sphCompute.SetFloat("_Stiffness", stiffness);
+        // Calculate the pressure constant B using the Tait equation:
+        float B = restDensity * soundSpeed * soundSpeed / gamma;
+        sphCompute.SetFloat("_B", B);
+        sphCompute.SetFloat("_Gamma", gamma);
+        // (Note: _Stiffness is no longer used for pressure calculation.)
         sphCompute.SetFloat("_Viscosity", viscosity);
         sphCompute.SetFloat("_SmoothingRadius", smoothingRadius);
         sphCompute.SetFloat("_Gravity", gravity);
@@ -303,10 +341,9 @@ public class SPH : MonoBehaviour
         if (boundaryCube != null)
         {
             Matrix4x4 boundaryMatrix = boundaryCube.localToWorldMatrix;
-            Matrix4x4 boundaryInvMatrix = boundaryCube.worldToLocalMatrix;  // Precomputed inverse
+            Matrix4x4 boundaryInvMatrix = boundaryCube.worldToLocalMatrix;
             sphCompute.SetMatrix("_BoundaryMatrix", boundaryMatrix);
             sphCompute.SetMatrix("_BoundaryInvMatrix", boundaryInvMatrix);
-            // Use a fixed half-extent corresponding to a unit cube.
             Vector3 halfExtents = new Vector3(0.5f, 0.5f, 0.5f);
             sphCompute.SetVector("_BoundaryHalfExtents", halfExtents);
         }
@@ -315,8 +352,6 @@ public class SPH : MonoBehaviour
             sphCompute.SetVector("_BoundsCenter", boundsCenter);
             sphCompute.SetVector("_BoundsSize", boundsSize);
         }
-
-
     }
 
     private void UpdateObstacle()

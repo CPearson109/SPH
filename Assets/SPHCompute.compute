@@ -1,7 +1,4 @@
-﻿// SPHCompute.compute
-
-// Each #pragma kernel line tells Unity about a kernel entry point.
-#pragma kernel CS_Clear
+﻿#pragma kernel CS_Clear
 #pragma kernel CS_ClearGrid
 #pragma kernel CS_BuildGrid
 #pragma kernel CS_DensityPressure
@@ -17,7 +14,6 @@ static const float PI = 3.14159265359;
 
 // --------------------------------------------------------------------
 // Utility: Pseudo-Random Generator
-// A simple hash-based function to break symmetry at boundaries.
 // --------------------------------------------------------------------
 float rand(float2 co)
 {
@@ -36,12 +32,9 @@ struct Particle
     float  pressure;
 };
 
-// Buffer containing all particles
 RWStructuredBuffer<Particle> Particles;
-
-// Grid buffers for spatial hashing:
-RWStructuredBuffer<int> GridCounts;   // Array of length (gridResolutionX * gridResolutionY * gridResolutionZ)
-RWStructuredBuffer<int> GridIndices;    // Array of length (totalCells * _MaxParticlesPerCell)
+RWStructuredBuffer<int> GridCounts;
+RWStructuredBuffer<int> GridIndices;
 
 // --------------------------------------------------------------------
 // Simulation Parameters
@@ -52,6 +45,7 @@ cbuffer SimulationParams
     float _DeltaTime;
     float _ParticleMass;
     float _RestDensity;
+    // _Stiffness is deprecated; pressure is now computed using Tait equation.
     float _Stiffness;
     float _Viscosity;
     float _SmoothingRadius;
@@ -67,7 +61,6 @@ cbuffer SimulationParams
     float3 _SpawnSize;
     float3 _ObstaclePos;
 
-    // New grid parameters:
     int _GridResolutionX;
     int _GridResolutionY;
     int _GridResolutionZ;
@@ -75,22 +68,23 @@ cbuffer SimulationParams
     float _CellSize;
     float3 _MinBound;
 
-    // Oriented boundary parameters (sent from C# when a boundary cube is assigned)
     float4x4 _BoundaryMatrix;
-    float4x4 _BoundaryInvMatrix;  // Precomputed inverse (world-to-local)
+    float4x4 _BoundaryInvMatrix;
     float3 _BoundaryHalfExtents;
+
+    // New Tait equation parameters:
+    float _B;
+    float _Gamma;
 }
 
 // --------------------------------------------------------------------
 // KERNEL: CS_Clear
-// Reset per-particle accumulators (acceleration, density, pressure).
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_Clear(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x;
     if (idx >= (uint)_ParticleCount) return;
-
     Particle p = Particles[idx];
     p.acceleration = 0.0;
     p.density = _RestDensity;
@@ -100,7 +94,6 @@ void CS_Clear(uint3 id : SV_DispatchThreadID)
 
 // --------------------------------------------------------------------
 // KERNEL: CS_ClearGrid
-// Reset the grid cell particle counts.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_ClearGrid(uint3 id : SV_DispatchThreadID)
@@ -113,7 +106,6 @@ void CS_ClearGrid(uint3 id : SV_DispatchThreadID)
 
 // --------------------------------------------------------------------
 // KERNEL: CS_BuildGrid
-// For each particle, compute its grid cell and store its index.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
@@ -124,7 +116,6 @@ void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
     Particle p = Particles[idx];
     float3 pos = p.position;
     int3 cellCoord = int3(floor((pos - _MinBound) / _CellSize));
-    // Clamp to valid grid coordinates.
     cellCoord = clamp(cellCoord, int3(0, 0, 0), int3(_GridResolutionX - 1, _GridResolutionY - 1, _GridResolutionZ - 1));
     int cellIndex = cellCoord.x + cellCoord.y * _GridResolutionX + cellCoord.z * _GridResolutionX * _GridResolutionY;
 
@@ -139,7 +130,6 @@ void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
 
 // --------------------------------------------------------------------
 // KERNEL: CS_DensityPressure
-// Compute density and pressure using neighbor particles from nearby grid cells.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
@@ -157,7 +147,6 @@ void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
     float3 minBound = _MinBound;
     int3 cell = int3(floor((pos - minBound) / _CellSize));
 
-    // Loop over neighboring cells (3x3x3)
     for (int z = cell.z - 1; z <= cell.z + 1; z++)
     {
         for (int y = cell.y - 1; y <= cell.y + 1; y++)
@@ -186,13 +175,14 @@ void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
     }
     density = max(density, _RestDensity);
     self.density = density;
-    self.pressure = _Stiffness * (density - _RestDensity);
+    // Compute pressure using the Tait equation:
+    self.pressure = _B * (pow(self.density / _RestDensity, _Gamma) - 1.0);
     Particles[idx] = self;
 }
 
 // --------------------------------------------------------------------
 // KERNEL: CS_ComputeForces
-// Compute forces (pressure, viscosity, surface tension) using grid-based neighbor search.
+// Revised pressure force using a symmetric formulation.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_ComputeForces(uint3 id : SV_DispatchThreadID)
@@ -208,8 +198,8 @@ void CS_ComputeForces(uint3 id : SV_DispatchThreadID)
     float h2 = h * h;
     float h6 = pow(h, 6.0);
 
-    float spikyGrad = -45.0 / (PI * h6);
-    float viscLap = 45.0 / (PI * h6);
+    float spikyGradFactor = -45.0 / (PI * h6);
+    float viscLapFactor = 45.0 / (PI * h6);
 
     float3 force = float3(0.0, _Gravity * densitySelf, 0.0);
     float3 colorGradient = float3(0.0, 0.0, 0.0);
@@ -239,14 +229,13 @@ void CS_ComputeForces(uint3 id : SV_DispatchThreadID)
                     float dist = sqrt(rSq) + 1e-6;
                     float3 dir = r / dist;
 
-                    float pressTerm = (self.pressure + other.pressure) / (2.0 * other.density);
-                    float3 gradW = spikyGrad * pow(h - dist, 2.0) * dir;
-                    force += -_ParticleMass * pressTerm * gradW;
+                    float pressureTerm = (self.pressure / (self.density * self.density)) + (other.pressure / (other.density * other.density));
+                    float3 gradW = spikyGradFactor * pow(h - dist, 2.0) * dir;
+                    force += -_ParticleMass * pressureTerm * gradW;
 
                     float3 dv = (other.velocity - self.velocity);
-                    float viscTerm = _Viscosity * _ParticleMass;
-                    float lapW = viscLap * (h - dist);
-                    force += (viscTerm * dv / other.density) * lapW;
+                    float lapW = viscLapFactor * (h - dist);
+                    force += _Viscosity * _ParticleMass * dv / other.density * lapW;
 
                     colorGradient += _ParticleMass * gradW / other.density;
                 }
@@ -262,7 +251,6 @@ void CS_ComputeForces(uint3 id : SV_DispatchThreadID)
 
 // --------------------------------------------------------------------
 // KERNEL: CS_XSPH
-// Optional velocity smoothing using grid-based neighbor search.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_XSPH(uint3 id : SV_DispatchThreadID)
@@ -321,7 +309,6 @@ void CS_XSPH(uint3 id : SV_DispatchThreadID)
 
 // --------------------------------------------------------------------
 // KERNEL: CS_VV_HalfStep
-// Velocity Verlet half-step update.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_VV_HalfStep(uint3 id : SV_DispatchThreadID)
@@ -337,7 +324,6 @@ void CS_VV_HalfStep(uint3 id : SV_DispatchThreadID)
 
 // --------------------------------------------------------------------
 // KERNEL: CS_VV_FullStep
-// Velocity Verlet full-step update.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_VV_FullStep(uint3 id : SV_DispatchThreadID)
@@ -350,12 +336,9 @@ void CS_VV_FullStep(uint3 id : SV_DispatchThreadID)
     Particles[idx] = p;
 }
 
-
 // --------------------------------------------------------------------
 // KERNEL: CS_Boundaries
-// Bounce particles off the boundaries.
-// Uses an oriented boundary if _BoundaryHalfExtents is non-zero,
-// otherwise falls back to the axis–aligned boundary.
+// Revised boundary collision with normal/tangent decomposition.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_Boundaries(uint3 id : SV_DispatchThreadID)
@@ -365,19 +348,15 @@ void CS_Boundaries(uint3 id : SV_DispatchThreadID)
 
     Particle p = Particles[idx];
 
-    // If an oriented boundary is provided (non-zero half-extents), use it.
     if (length(_BoundaryHalfExtents) > 0.001)
     {
-        // Transform the particle's world position into the boundary's local space.
         float4 localPos4 = mul(_BoundaryInvMatrix, float4(p.position, 1.0));
         float3 localPos = localPos4.xyz;
 
-        // The unit cube extends from -0.5 to +0.5 on each axis.
-        float3 E = float3(0.5, 0.5, 0.5); // fixed for a unit cube collision volume
+        float3 E = float3(0.5, 0.5, 0.5);
         float3 penetration = float3(0.0, 0.0, 0.0);
         bool collided = false;
 
-        // Check each axis and compute penetration.
         if (localPos.x < -E.x)
         {
             penetration.x = -E.x - localPos.x;
@@ -417,30 +396,38 @@ void CS_Boundaries(uint3 id : SV_DispatchThreadID)
 
         if (collided)
         {
-            // Transform corrected local position back to world space.
             float4 worldPos = mul(_BoundaryMatrix, float4(localPos, 1.0));
             p.position = worldPos.xyz;
 
-            // Instead of completely inverting velocity,
-            // blend (lerp) the velocity with its negative using a restitution factor.
-            // Lower restitution makes the collision less bouncy.
-            float restitutionFactor = 0.3; // adjust between 0 (no bounce) and 1 (full bounce)
-            if (penetration.x > 0.0)
-                p.velocity.x = lerp(p.velocity.x, -p.velocity.x, restitutionFactor);
-            if (penetration.y > 0.0)
-                p.velocity.y = lerp(p.velocity.y, -p.velocity.y, restitutionFactor);
-            if (penetration.z > 0.0)
-                p.velocity.z = lerp(p.velocity.z, -p.velocity.z, restitutionFactor);
+            // After computing the local normal:
+            float3 localNormal = float3(0.0, 0.0, 0.0);
+            if (penetration.x > 0.0) localNormal.x = (localPos.x < 0.0) ? -1.0 : 1.0;
+            if (penetration.y > 0.0) localNormal.y = (localPos.y < 0.0) ? -1.0 : 1.0;
+            if (penetration.z > 0.0) localNormal.z = (localPos.z < 0.0) ? -1.0 : 1.0;
+            localNormal = normalize(localNormal);
+
+            // Transform local normal to world space
+            float3 worldNormal = normalize(mul((float3x3)_BoundaryMatrix, localNormal));
+
+            float restitutionFactor = 0.8;
+            float frictionFactor = 0.1;
+
+            float3 vNormal = dot(p.velocity, worldNormal) * worldNormal;
+            float3 vTangent = p.velocity - vNormal;
+
+            vNormal = -vNormal * restitutionFactor;
+            vTangent *= (1.0 - frictionFactor);
+
+            p.velocity = vNormal + vTangent;
+
         }
     }
     else
     {
-        // Fallback: axis-aligned collision (unchanged).
         float3 halfSize = _BoundsSize * 0.5;
         float3 minBound = _BoundsCenter - halfSize;
         float3 maxBound = _BoundsCenter + halfSize;
         float velocityDamping = 0.9;
-        float offset = 1e-3;
 
         if (p.position.x < minBound.x)
         {
@@ -477,11 +464,8 @@ void CS_Boundaries(uint3 id : SV_DispatchThreadID)
     Particles[idx] = p;
 }
 
-
-
 // --------------------------------------------------------------------
 // KERNEL: CS_ObstacleCollision
-// Handle simple sphere obstacle collisions with damping.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_ObstacleCollision(uint3 id : SV_DispatchThreadID)
@@ -513,7 +497,6 @@ void CS_ObstacleCollision(uint3 id : SV_DispatchThreadID)
 
 // --------------------------------------------------------------------
 // KERNEL: CS_VelocityDamping
-// Additional velocity damping to help particles settle.
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_VelocityDamping(uint3 id : SV_DispatchThreadID)

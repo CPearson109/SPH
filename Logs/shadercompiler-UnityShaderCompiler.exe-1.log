@@ -2,500 +2,568 @@ Base path: 'C:/Program Files/Unity/Hub/Editor/6000.0.32f1/Editor/Data', plugins 
 Cmd: initializeCompiler
 
 Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=4042 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(70): signed/unsigned mismatch, unsigned assumed
-  error: 2 plat 4 at SPHCompute.compute(82): undeclared identifier 'inverse'
- ok=0 outsize=0
-
-Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
+  insize=16464 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=722
 
 Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=722
+
+Cmd: compileComputeKernel
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=1612
 
 Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
- ok=1 outsize=3563
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3442
 
 Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=716
 
 Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=868
 
 Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(258): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=3867
 
 Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=4348
 
 Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(153): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(138): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=3316
 
 Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=1387
 
 Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=667
 
 Cmd: compileComputeKernel
-  insize=19330 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(92): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(110): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(122): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(148): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(201): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(271): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(330): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(346): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(363): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(492): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(524): signed/unsigned mismatch, unsigned assumed
+  insize=17503 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(217): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(280): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=620
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=722
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=1612
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
- ok=1 outsize=3563
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3442
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=716
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=868
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(263): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=3867
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
- ok=1 outsize=4348
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=4384
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(153): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(138): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=3316
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=1387
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=667
 
 Cmd: compileComputeKernel
-  insize=19396 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17057 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(119): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(158): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(220): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(285): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=620
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=722
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=1612
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
- ok=1 outsize=3131
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3442
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=716
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=868
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(264): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=3867
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
- ok=1 outsize=4348
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=4384
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(153): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
- ok=1 outsize=3316
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(143): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(179): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3434
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=1387
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=667
 
 Cmd: compileComputeKernel
-  insize=18963 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=620
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=722
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=1612
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
- ok=1 outsize=3022
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3442
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=716
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=868
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(264): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=3867
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
- ok=1 outsize=4348
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=4384
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(153): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
- ok=1 outsize=3316
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(143): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(179): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3434
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=1387
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=667
 
 Cmd: compileComputeKernel
-  insize=18538 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(133): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(174): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(234): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHCompute.compute(298): signed/unsigned mismatch, unsigned assumed
+  insize=17068 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=620
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=722
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=1612
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3442
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=716
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=868
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(264): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3867
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=4384
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(143): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(179): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3434
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=1387
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=667
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=620
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=722
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=1612
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3442
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=716
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=868
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(264): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3867
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=4384
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(143): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(179): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3434
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=1387
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=667
+
+Cmd: compileComputeKernel
+  insize=17069 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=620
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_VelocityDamping ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=722
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_ObstacleCollision ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=1612
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_Boundaries ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3630
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_VV_FullStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=716
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_VV_HalfStep ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=868
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_XSPH ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(264): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3867
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_ComputeForces ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=4384
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_DensityPressure ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(143): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(179): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=3434
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_BuildGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=1387
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_ClearGrid ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
+ ok=1 outsize=667
+
+Cmd: compileComputeKernel
+  insize=17301 file=Assets/SPHCompute.compute kernel=CS_Clear ppOnly=0 stripLineD=0 buildPlatform=19 km=<UNITY_VERSION=60000032> pKW=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR UNITY_PLATFORM_SUPPORTS_DEPTH_FETCH uKW=SHADER_STAGE_COMPUTE platform=d3d11 flags=0 reqs=16385 forceDXC=0 forceFXC=0  error: 1 plat 4 at SPHCompute.compute(124): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(163): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(224): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHCompute.compute(286): signed/unsigned mismatch, unsigned assumed
  ok=1 outsize=620
 
 Cmd: shutdown

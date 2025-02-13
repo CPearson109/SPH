@@ -95,8 +95,11 @@ public class BoundaryRenderer : MonoBehaviour
         lineRenderer.SetPositions(edgePoints);
 
         // Now check for particles hitting the boundary faces.
+        // For each particle, transform its world position into boundary cube local space.
+        // Since the unit cube extends from -0.5 to +0.5, if a particle's local coordinate is near -0.5 or 0.5, it's colliding.
         if (sph.GetParticleBuffer() != null)
         {
+            // Create an array to hold particle data.
             ParticleData[] particles = new ParticleData[sph.ParticleCount];
             sph.GetParticleBuffer().GetData(particles);
 
@@ -105,18 +108,21 @@ public class BoundaryRenderer : MonoBehaviour
             foreach (var part in particles)
             {
                 Vector3 localPos = worldToLocal.MultiplyPoint(part.position);
+                // Check if any component is within faceEpsilon of -0.5 or 0.5.
                 if (Mathf.Abs(Mathf.Abs(localPos.x) - 0.5f) < faceEpsilon ||
                     Mathf.Abs(Mathf.Abs(localPos.y) - 0.5f) < faceEpsilon ||
                     Mathf.Abs(Mathf.Abs(localPos.z) - 0.5f) < faceEpsilon)
                 {
                     Debug.Log("Particle hit boundary face! Local pos: " + localPos);
                     collisionDetected = true;
+                    // Break after first detection if you don’t want to spam logs.
                     break;
                 }
             }
             if (!collisionDetected)
             {
-                // Optionally log if no collision detected.
+                // Optionally, print a message if no collisions are detected.
+                // Debug.Log("No particle collision with boundary detected this frame.");
             }
         }
     }

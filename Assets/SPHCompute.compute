@@ -508,7 +508,7 @@ void CS_VelocityDamping(uint3 id : SV_DispatchThreadID)
     float speed = length(p.velocity);
     if (speed < 0.2)
     {
-        p.velocity *= 0.9;
+        p.velocity *= 0.98;
     }
     else
     {

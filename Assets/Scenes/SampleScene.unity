@@ -413,8 +413,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6066f8eb70b39474792468eb6f155b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleCount: 100000
+  particleCount: 50000
   spawnSize: {x: 5, y: 10, z: 5}
+  restDensity: 20
+  viscosity: 0.1
 --- !u!4 &1237233260
 Transform:
   m_ObjectHideFlags: 0
@@ -478,7 +480,7 @@ MonoBehaviour:
   restDensity: 20
   soundSpeed: 10
   gamma: 3
-  stiffness: 10
+  stiffness: 800
   viscosity: 0.1
   smoothingRadius: 0.28
   gravity: -9.81
@@ -495,7 +497,8 @@ MonoBehaviour:
   fluidMaterial: {fileID: 2100000, guid: dd40e7b868360c24a878bf764aa4f5a9, type: 2}
   sphCompute: {fileID: 7200000, guid: 0e803cd39b0285949a31f4a2c4db0a3a, type: 3}
   maxParticlesPerCell: 100
-  spawnBoxes: []
+  spawnBoxes:
+  - {fileID: 1237233259}
 --- !u!1 &1352555873
 GameObject:
   m_ObjectHideFlags: 0

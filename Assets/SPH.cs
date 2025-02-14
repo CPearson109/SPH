@@ -4,17 +4,16 @@ public class SPH : MonoBehaviour
 {
     [Header("Particle Settings")]
     [Tooltip("Mass of each particle. Derived from desired spacing and rest density.")]
-    public float particleMass = 0.03f;  // Lower mass helps keep densities in check.
-    [Tooltip("Rest (target) density of the fluid.")]
+    public float particleMass = 0.03f;
+    [Tooltip("Rest (target) density of the fluid (default).")]
     public float restDensity = 1000f;
-    // The Tait equation parameters:
     [Tooltip("Speed of sound in the fluid (affects compressibility).")]
     public float soundSpeed = 20f;
     [Tooltip("Gamma exponent for the Tait equation (typically ~7).")]
     public float gamma = 7f;
     [Tooltip("Stiffness factor is no longer used; pressure is computed using the Tait equation.")]
-    public float stiffness = 800f;  // (Not used now; kept for legacy/debug purposes)
-    [Tooltip("Viscosity coefficient.")]
+    public float stiffness = 800f;
+    [Tooltip("Viscosity coefficient (default, used if not overridden by spawn box).")]
     public float viscosity = 0.1f;
     [Tooltip("Smoothing (kernel) radius used for neighbor interactions. Should be ~1.3-2x the particle spacing.")]
     public float smoothingRadius = 0.2f;
@@ -80,6 +79,8 @@ public class SPH : MonoBehaviour
         public Vector3 acceleration;
         public float density;
         public float pressure;
+        public float restDensity;
+        public float viscosity; // per-particle viscosity for multiphase fluids
     }
 
     private ComputeBuffer particleBuffer;
@@ -257,7 +258,9 @@ public class SPH : MonoBehaviour
     // ----------------------------
     private void CreateParticles()
     {
-        int stride = sizeof(float) * (3 + 3 + 3 + 1 + 1);
+        // Each particle now has 13 floats:
+        // position (3), velocity (3), acceleration (3), density (1), pressure (1), restDensity (1), viscosity (1)
+        int stride = sizeof(float) * 13;
         particleBuffer = new ComputeBuffer(particleCount, stride);
 
         Particle[] particlesInit = new Particle[particleCount];
@@ -276,8 +279,10 @@ public class SPH : MonoBehaviour
                 p.position = randPos;
                 p.velocity = Vector3.zero;
                 p.acceleration = Vector3.zero;
-                p.density = restDensity;
+                p.density = sb.restDensity;
                 p.pressure = 0f;
+                p.restDensity = sb.restDensity;  // assign per-particle rest density from spawn box
+                p.viscosity = sb.viscosity;      // assign per-particle viscosity from spawn box
                 particlesInit[index++] = p;
             }
         }
@@ -316,12 +321,8 @@ public class SPH : MonoBehaviour
         sphCompute.SetInt("_ParticleCount", particleCount);
         sphCompute.SetFloat("_ParticleMass", particleMass);
         sphCompute.SetFloat("_RestDensity", restDensity);
-        // Calculate the pressure constant B using the Tait equation:
-        float B = restDensity * soundSpeed * soundSpeed / gamma;
-        sphCompute.SetFloat("_B", B);
+        sphCompute.SetFloat("_SoundSpeed", soundSpeed);
         sphCompute.SetFloat("_Gamma", gamma);
-        // (Note: _Stiffness is no longer used for pressure calculation.)
-        sphCompute.SetFloat("_Viscosity", viscosity);
         sphCompute.SetFloat("_SmoothingRadius", smoothingRadius);
         sphCompute.SetFloat("_Gravity", gravity);
         sphCompute.SetFloat("_SurfaceTensionCoefficient", surfaceTensionCoefficient);
@@ -405,7 +406,6 @@ public class SPH : MonoBehaviour
         sphCompute.Dispatch(kernelID, groups, 1, 1);
     }
 
-    public ComputeBuffer GetParticleBuffer() => particleBuffer;
-    public int ParticleCount => particleCount;
+    public ComputeBuffer GetParticleBuffer() { return particleBuffer; }
+    public int ParticleCount { get { return particleCount; } }
 }
-

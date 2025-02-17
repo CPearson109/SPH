@@ -55,6 +55,8 @@ public class SPH : MonoBehaviour
       achieving a counting sort–based approach that avoids the overhead of global sorting.
     - During neighbor search (density, pressure, and force calculations), only particles in adjacent cells
       are processed, reducing the computational complexity from O(n^2) to roughly O(n * k), where k is the average number of neighbors.
+    - Additionally, shared memory is used in the heavy neighbor loops (in CS_DensityPressure and CS_ComputeForces)
+      to cache particle indices from grid cells, reducing global memory accesses.
     
     This approach significantly enhances performance, enabling real-time simulations with millions of particles.
     */

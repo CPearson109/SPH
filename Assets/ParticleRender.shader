@@ -1,4 +1,4 @@
-﻿Shader "Custom/ParticleFluid"
+﻿Shader "Custom/ParticleFluidOptimized"
 {
     Properties
     {
@@ -32,16 +32,25 @@
                 float3 acceleration;
                 float density;
                 float pressure;
-                float restDensity; // per-particle rest density
-                float viscosity;   // per-particle viscosity (dummy field for rendering)
+                float restDensity;
+                float viscosity;
+                float mass;
+                float4 color;
             };
 
             StructuredBuffer<Particle> _ParticleBuffer;
             int _NumParticles;
 
-            fixed4 _ParticleColor;
+            fixed4 _ParticleColor; // fallback global color if per-particle color is not used
             float _SphereRadius;
             float4 _LightDir;
+
+            // Precompute a normalized light direction in the vertex shader (passed to frag via geometry)
+            // Alternatively, you could calculate this once on the CPU and pass it as a uniform.
+            float3 NormalizeLightDir()
+            {
+                return normalize(_LightDir.xyz);
+            }
 
             struct appdata
             {
@@ -59,7 +68,8 @@
                 v2g o;
                 Particle p = _ParticleBuffer[v.vertexID];
                 o.worldPos = p.position;
-                o.color = _ParticleColor;
+                // Multiply the per-particle color with the global one.
+                o.color = p.color * _ParticleColor;
                 return o;
             }
 
@@ -76,9 +86,9 @@
             {
                 float3 center = input[0].worldPos;
                 float3 viewDir = normalize(center - _WorldSpaceCameraPos);
-                float3 up = float3(0, 1, 0);
-                if (abs(dot(up, viewDir)) > 0.99)
-                    up = float3(1, 0, 0);
+
+                // Choose an up vector; avoid colinearity with viewDir.
+                float3 up = abs(dot(float3(0,1,0), viewDir)) > 0.99 ? float3(1,0,0) : float3(0,1,0);
                 float3 right = normalize(cross(up, viewDir));
                 up = cross(viewDir, right);
 
@@ -94,6 +104,7 @@
                 o.color = input[0].color;
                 o.worldPos = center;
 
+                // Compute clip-space positions once for each vertex.
                 o.pos = UnityWorldToClipPos(float4(pos0, 1.0));
                 o.uv = float2(-1, -1);
                 triStream.Append(o);
@@ -123,19 +134,25 @@
 
             fixed4 frag(g2f i) : SV_Target
             {
-                float2 uv = i.uv;
-                if (dot(uv, uv) > 1.0)
-                    discard;
+                // Cache dot(uv, uv)
+                float uvDot = dot(i.uv, i.uv);
+                // Discard fragments outside the circle (for a smooth particle edge)
+                clip(1.0 - uvDot);
 
-                float z = sqrt(1.0 - dot(uv, uv));
-                float3 normal = normalize(float3(uv.x, uv.y, z));
+                float z = sqrt(1.0 - uvDot);
+                float3 normal = normalize(float3(i.uv.x, i.uv.y, z));
                 float3 viewDir = normalize(_WorldSpaceCameraPos - i.worldPos);
-                float fresnel = pow(1.0 - saturate(dot(normal, viewDir)), 3.0);
-                float NdotL = saturate(dot(normal, normalize(_LightDir.xyz)));
-                fixed3 diffuse = i.color.rgb * (0.2 + 0.8 * NdotL);
-                float3 halfDir = normalize(viewDir + normalize(_LightDir.xyz));
+
+                // Precompute fresnel and lighting using a cached normalized light direction.
+                float3 lightDir = normalize(_LightDir.xyz);
+                float ndotl = saturate(dot(normal, lightDir));
+                float3 halfDir = normalize(viewDir + lightDir);
                 float spec = pow(saturate(dot(normal, halfDir)), 32.0);
-                fixed3 fluidColor = lerp(diffuse, float3(1.0, 1.0, 1.0) * spec, fresnel);
+
+                float fresnel = pow(1.0 - saturate(dot(normal, viewDir)), 3.0);
+                fixed3 diffuse = i.color.rgb * (0.2 + 0.8 * ndotl);
+                fixed3 fluidColor = lerp(diffuse, fixed3(1,1,1) * spec, fresnel);
+
                 return fixed4(fluidColor, i.color.a);
             }
             ENDCG

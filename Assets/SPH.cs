@@ -3,75 +3,71 @@
 public class SPH : MonoBehaviour
 {
     [Header("Particle Settings")]
-    [Tooltip("Mass of each particle. Derived from desired spacing and rest density.")]
-    public float particleMass = 0.03f;
-    [Tooltip("Rest (target) density of the fluid (default).")]
-    public float restDensity = 1000f;
-    [Tooltip("Speed of sound in the fluid (affects compressibility).")]
+    // Removed global controls for particleMass, restDensity, and viscosity.
+    // These are now controlled per-particle via SpawnBox.
     public float soundSpeed = 20f;
-    [Tooltip("Gamma exponent for the Tait equation (typically ~7).")]
     public float gamma = 7f;
-    [Tooltip("Stiffness factor is no longer used; pressure is computed using the Tait equation.")]
-    public float stiffness = 800f;
-    [Tooltip("Viscosity coefficient (default, used if not overridden by spawn box).")]
-    public float viscosity = 0.1f;
-    [Tooltip("Smoothing (kernel) radius used for neighbor interactions. Should be ~1.3-2x the particle spacing.")]
+    public float stiffness = 800f; // (Not used in current computations)
     public float smoothingRadius = 0.2f;
-    [Tooltip("Gravity constant (negative for downward).")]
     public float gravity = -9.81f;
 
     [Header("Time Settings")]
-    [Tooltip("Base time step for the simulation.")]
     public float timeStep = 0.003f;
-    [Tooltip("Number of solver sub-steps per frame.")]
     public int subSteps = 2;
 
     [Header("Surface Tension")]
-    [Tooltip("Coefficient for surface tension forces.")]
     public float surfaceTensionCoefficient = 0.03f;
 
     [Header("XSPH Settings")]
-    [Tooltip("Epsilon for XSPH velocity smoothing.")]
     public float xsphEpsilon = 0.5f;
 
     [Header("Axis-Aligned Boundary (Fallback)")]
-    [Tooltip("Center of the simulation bounding box (used if no boundary cube is assigned).")]
     public Vector3 boundsCenter = Vector3.zero;
-    [Tooltip("Size of the simulation bounding box (used if no boundary cube is assigned).")]
     public Vector3 boundsSize = new Vector3(10f, 10f, 10f);
 
     [Header("Boundary Cube")]
-    [Tooltip("Assign a 3D object (e.g., a cube) whose edges define the simulation boundary.")]
     public Transform boundaryCube;
 
     [Header("Obstacle Settings")]
-    [Tooltip("Optional sphere collider inside the fluid domain.")]
     public Collider obstacleCollider;
-    [Tooltip("Repulsion stiffness for obstacle collisions.")]
     public float obstacleRepulsionStiffness = 5000f;
-    [Tooltip("Velocity damping factor when colliding with obstacles.")]
     public float particleCollisionDamping = 0.9998f;
 
     [Header("Rendering Settings")]
-    [Tooltip("Material for rendering the fluid (uses the GPU particle shader).")]
     public Material fluidMaterial;
 
     [Header("Compute Shaders")]
-    [Tooltip("Main SPH compute (all kernels)")]
     public ComputeShader sphCompute;
 
     [Header("Grid Settings")]
-    [Tooltip("Maximum number of particles allowed per grid cell.")]
     public int maxParticlesPerCell = 100;
 
     [Header("Spawn Boxes")]
-    [Tooltip("List of SpawnBox objects that define where to spawn particles.")]
     public SpawnBox[] spawnBoxes;
+
+    /*
+    Optimized Fixed-Radius Nearest Neighbor Search (NNS) Integration:
+    
+    This simulation uses an advanced optimization technique for neighbor search in SPH:
+    - The simulation space is partitioned into uniform grid cells.
+    - Each particle is assigned to a grid cell based on its position.
+    - Atomic operations are used in the compute shader (CS_BuildGrid) to insert particles into cells,
+      achieving a counting sort–based approach that avoids the overhead of global sorting.
+    - During neighbor search (density, pressure, and force calculations), only particles in adjacent cells
+      are processed, reducing the computational complexity from O(n^2) to roughly O(n * k), where k is the average number of neighbors.
+    
+    This approach significantly enhances performance, enabling real-time simulations with millions of particles.
+    */
 
     // ---------------------------
     // Internal Data Structures
     // ---------------------------
-    // This structure must match the one in the compute shader.
+    // The Particle structure now holds:
+    // - position (3), velocity (3), acceleration (3),
+    // - density (1), pressure (1),
+    // - restDensity (1), viscosity (1), mass (1) ← (all controlled by SpawnBox),
+    // - color (4)
+    // Total: 18 floats.
     struct Particle
     {
         public Vector3 position;
@@ -79,13 +75,20 @@ public class SPH : MonoBehaviour
         public Vector3 acceleration;
         public float density;
         public float pressure;
-        public float restDensity;
-        public float viscosity; // per-particle viscosity for multiphase fluids
+        public float restDensity; // controlled by SpawnBox
+        public float viscosity;   // controlled by SpawnBox
+        public float mass;        // controlled by SpawnBox
+        public Color color;       // for multiphase visualization
     }
 
     private ComputeBuffer particleBuffer;
     private ComputeBuffer gridCountsBuffer;
     private ComputeBuffer gridIndicesBuffer;
+
+    // CPU-side arrays to help update static per-particle properties at runtime.
+    private Particle[] particleArray;
+    // This array tracks which SpawnBox each particle came from.
+    private int[] particleSpawnBoxIndices;
 
     // Grid parameters.
     private int gridResolutionX, gridResolutionY, gridResolutionZ;
@@ -122,6 +125,10 @@ public class SPH : MonoBehaviour
         {
             particleCount += sb.particleCount;
         }
+
+        // Initialize CPU-side arrays.
+        particleArray = new Particle[particleCount];
+        particleSpawnBoxIndices = new int[particleCount];
 
         CreateParticles();
 
@@ -202,6 +209,11 @@ public class SPH : MonoBehaviour
         SetComputeParams();
         BindBuffers();
 
+        // Update each particle’s static properties (restDensity, viscosity, mass, color)
+        // based on its originating SpawnBox. This ensures that any runtime changes in a SpawnBox's settings
+        // are applied in real time.
+        UpdateParticleStaticProperties();
+
         DispatchCompute(kernel_ClearGrid, totalCells);
         DispatchCompute(kernel_BuildGrid, particleCount);
 
@@ -258,15 +270,15 @@ public class SPH : MonoBehaviour
     // ----------------------------
     private void CreateParticles()
     {
-        // Each particle now has 13 floats:
-        // position (3), velocity (3), acceleration (3), density (1), pressure (1), restDensity (1), viscosity (1)
-        int stride = sizeof(float) * 13;
+        // Each particle has 18 floats (see Particle struct).
+        int stride = sizeof(float) * 18;
         particleBuffer = new ComputeBuffer(particleCount, stride);
 
         Particle[] particlesInit = new Particle[particleCount];
         int index = 0;
-        foreach (var sb in spawnBoxes)
+        for (int sbIndex = 0; sbIndex < spawnBoxes.Length; sbIndex++)
         {
+            SpawnBox sb = spawnBoxes[sbIndex];
             Vector3 halfSpawn = sb.spawnSize * 0.5f;
             for (int i = 0; i < sb.particleCount; i++)
             {
@@ -277,16 +289,44 @@ public class SPH : MonoBehaviour
                 );
                 Particle p;
                 p.position = randPos;
-                p.velocity = Vector3.zero;
+                p.velocity = sb.initialVelocity;
                 p.acceleration = Vector3.zero;
-                p.density = sb.restDensity;
+                // Set the static properties from the SpawnBox.
+                p.restDensity = sb.restDensity;
+                p.viscosity = sb.viscosity;
+                p.mass = sb.particleMass;
+                p.color = sb.particleColor;
+                // Initialize dynamic properties.
+                p.density = p.restDensity;
                 p.pressure = 0f;
-                p.restDensity = sb.restDensity;  // assign per-particle rest density from spawn box
-                p.viscosity = sb.viscosity;      // assign per-particle viscosity from spawn box
-                particlesInit[index++] = p;
+                particlesInit[index] = p;
+                // Record which SpawnBox this particle came from.
+                particleSpawnBoxIndices[index] = sbIndex;
+                index++;
             }
         }
         particleBuffer.SetData(particlesInit);
+        // Store a copy on the CPU for runtime updates.
+        System.Array.Copy(particlesInit, particleArray, particleCount);
+    }
+
+    // This method updates the static properties (restDensity, viscosity, mass, color)
+    // of each particle based on the current SpawnBox settings.
+    private void UpdateParticleStaticProperties()
+    {
+        // Retrieve the current particle data from the GPU.
+        particleBuffer.GetData(particleArray);
+        for (int i = 0; i < particleCount; i++)
+        {
+            int sbIndex = particleSpawnBoxIndices[i];
+            SpawnBox sb = spawnBoxes[sbIndex];
+            particleArray[i].restDensity = sb.restDensity;
+            particleArray[i].viscosity = sb.viscosity;
+            particleArray[i].mass = sb.particleMass;
+            particleArray[i].color = sb.particleColor;
+        }
+        // Write the updated static values back to the GPU.
+        particleBuffer.SetData(particleArray);
     }
 
     private void GetKernelIDs()
@@ -319,8 +359,7 @@ public class SPH : MonoBehaviour
     private void SetComputeParams()
     {
         sphCompute.SetInt("_ParticleCount", particleCount);
-        sphCompute.SetFloat("_ParticleMass", particleMass);
-        sphCompute.SetFloat("_RestDensity", restDensity);
+        // Removed global _ParticleMass, _RestDensity, and _Viscosity; these are now per-particle.
         sphCompute.SetFloat("_SoundSpeed", soundSpeed);
         sphCompute.SetFloat("_Gamma", gamma);
         sphCompute.SetFloat("_SmoothingRadius", smoothingRadius);

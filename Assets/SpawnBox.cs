@@ -16,6 +16,15 @@ public class SpawnBox : MonoBehaviour
     [Tooltip("Viscosity for particles spawned from this box.")]
     public float viscosity = 0.1f;
 
+    [Tooltip("Mass for particles spawned from this box.")]
+    public float particleMass = 0.03f;
+
+    [Tooltip("Initial velocity for particles spawned from this box.")]
+    public Vector3 initialVelocity = Vector3.zero;
+
+    [Tooltip("Color for particles spawned from this box (for multiphase visualization).")]
+    public Color particleColor = Color.white;
+
     // A convenient property: the center is just the GameObject's position.
     public Vector3 SpawnCenter => transform.position;
 

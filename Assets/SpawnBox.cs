@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[ExecuteAlways] // so that it works in edit mode too
+[ExecuteAlways] // So it also draws the spawn box gizmo in edit mode
 public class SpawnBox : MonoBehaviour
 {
     [Header("Spawn Box Settings")]

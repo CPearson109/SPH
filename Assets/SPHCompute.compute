@@ -1,32 +1,11 @@
-﻿// SPHCompute.compute
-
-// Optimized Fixed-Radius Nearest Neighbor Search (NNS) using Grid-Based Spatial Partitioning and Counting Sort-Based Approach
-//
-// This compute shader implementation integrates an advanced optimization technique for SPH simulations:
-// 1. Fixed-Radius Nearest Neighbor Search (NNS): 
-//    Instead of performing an O(n^2) brute-force search for neighbors, particles are sorted into uniform grid cells (bins)
-//    using a Counting Sort–based approach. This reduces comparisons to roughly O(n * k), where k is the average number of neighbors.
-// 2. Spatial Partitioning Strategy:
-//    - The simulation space is divided into uniform grid cells.
-//    - Each particle is assigned to a grid cell based on its position.
-//    - Atomic operations insert particles into grid cells in parallel.
-//    - During neighbor search, only particles in the same and adjacent cells are considered.
-// 3. Counting Sort–Based Approach:
-//    - Instead of a global Radix sort, a counting sort is used to reorder particles locally.
-//    - This eliminates the overhead of global sorting and minimizes kernel calls.
-//
-// This optimization is critical for achieving real-time performance with millions of particles.
-
-#pragma kernel CS_Clear
+﻿#pragma kernel CS_Clear
 #pragma kernel CS_ClearGrid
 #pragma kernel CS_BuildGrid
 #pragma kernel CS_DensityPressure
-#pragma kernel CS_ComputeForces
-#pragma kernel CS_XSPH
+#pragma kernel CS_ForceXSPH
 #pragma kernel CS_VV_HalfStep
 #pragma kernel CS_VV_FullStep
-#pragma kernel CS_Boundaries
-#pragma kernel CS_ObstacleCollision
+#pragma kernel CS_BoundObs
 #pragma kernel CS_VelocityDamping
 
 static const float PI = 3.14159265359;
@@ -51,9 +30,9 @@ struct Particle
     float density;
     float pressure;
     float restDensity; // per-particle rest density
-    float viscosity; // per-particle viscosity for multiphase fluids
-    float mass; // per-particle mass
-    float4 color; // per-particle color (for multiphase visualization)
+    float viscosity;   // per-particle viscosity for multiphase fluids
+    float mass;        // per-particle mass
+    float4 color;      // per-particle color (for multiphase visualization)
 };
 
 RWStructuredBuffer<Particle> Particles;
@@ -67,13 +46,12 @@ cbuffer SimulationParams
 {
     int _ParticleCount;
     float _DeltaTime;
-    
+
     float _ParticleMass; // kept for backward compatibility
-    float _RestDensity; // Global rest density (used for initialization)
-    float _Stiffness;
+    float _RestDensity;  // Global rest density (used for initialization)
     float _SoundSpeed;
     float _Gamma;
-    
+
     float _SmoothingRadius;
     float _Gravity;
     float _SurfaceTensionCoefficient;
@@ -102,16 +80,15 @@ cbuffer SimulationParams
 // --------------------------------------------------------------------
 // KERNEL: CS_Clear
 // --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
+[numthreads(256, 1, 1)]
 void CS_Clear(uint3 id : SV_DispatchThreadID)
 {
-    int idx = (int) id.x;
-    if (idx >= _ParticleCount)
-        return;
-    
+    int idx = (int)id.x;
+    if (idx >= _ParticleCount) return;
+
     Particle p = Particles[idx];
     p.acceleration = 0.0;
-    p.density = p.restDensity; // Use per-particle rest density
+    p.density = p.restDensity; // Reset density to rest density
     p.pressure = 0.0;
     Particles[idx] = p;
 }
@@ -119,25 +96,23 @@ void CS_Clear(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_ClearGrid
 // --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
+[numthreads(256, 1, 1)]
 void CS_ClearGrid(uint3 id : SV_DispatchThreadID)
 {
-    int cellIndex = (int) id.x;
+    int cellIndex = (int)id.x;
     int totalCells = _GridResolutionX * _GridResolutionY * _GridResolutionZ;
-    if (cellIndex >= totalCells)
-        return;
+    if (cellIndex >= totalCells) return;
     GridCounts[cellIndex] = 0;
 }
 
 // --------------------------------------------------------------------
 // KERNEL: CS_BuildGrid
 // --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
+[numthreads(256, 1, 1)]
 void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
 {
-    int idx = (int) id.x;
-    if (idx >= _ParticleCount)
-        return;
+    int idx = (int)id.x;
+    if (idx >= _ParticleCount) return;
 
     Particle p = Particles[idx];
     float3 pos = p.position;
@@ -145,8 +120,6 @@ void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
     cellCoord = clamp(cellCoord, int3(0, 0, 0), int3(_GridResolutionX - 1, _GridResolutionY - 1, _GridResolutionZ - 1));
     int cellIndex = cellCoord.x + cellCoord.y * _GridResolutionX + cellCoord.z * _GridResolutionX * _GridResolutionY;
 
-    // Counting Sort-Based Insertion into Grid:
-    // Each particle computes its grid cell index and uses an atomic add to determine its position within the cell.
     int count;
     InterlockedAdd(GridCounts[cellIndex], 1, count);
     if (count < _MaxParticlesPerCell)
@@ -159,50 +132,43 @@ void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_DensityPressure
 // --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
+[numthreads(256, 1, 1)]
 void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
 {
-    int idx = (int) id.x;
-    if (idx >= _ParticleCount)
-        return;
+    int idx = (int)id.x;
+    if (idx >= _ParticleCount) return;
 
     Particle self = Particles[idx];
     float h = _SmoothingRadius;
     float h2 = h * h;
-    // Precompute poly6 kernel factor
-    float poly6 = 315.0f / (64.0f * PI * (h * h * h * h * h * h * h * h * h));
+    // Precompute the poly6 kernel constant once per kernel invocation.
+    float poly6 = 315.0f / (64.0f * PI * pow(h, 9));
     float density = 0.0f;
 
     float3 pos = self.position;
     int3 cell = int3(floor((pos - _MinBound) / _CellSize));
 
-    // Loop over neighboring grid cells
     for (int z = cell.z - 1; z <= cell.z + 1; z++)
     {
-        if (z < 0 || z >= _GridResolutionZ)
-            continue;
+        if (z < 0 || z >= _GridResolutionZ) continue;
         for (int y = cell.y - 1; y <= cell.y + 1; y++)
         {
-            if (y < 0 || y >= _GridResolutionY)
-                continue;
+            if (y < 0 || y >= _GridResolutionY) continue;
             for (int x = cell.x - 1; x <= cell.x + 1; x++)
             {
-                if (x < 0 || x >= _GridResolutionX)
-                    continue;
+                if (x < 0 || x >= _GridResolutionX) continue;
                 int neighborCellIndex = x + y * _GridResolutionX + z * _GridResolutionX * _GridResolutionY;
                 int neighborCount = GridCounts[neighborCellIndex];
                 int baseIndex = neighborCellIndex * _MaxParticlesPerCell;
                 for (int k = 0; k < neighborCount; k++)
                 {
                     int j = GridIndices[baseIndex + k];
-                    if (j == idx)
-                        continue;
+                    if (j == idx) continue;
                     Particle other = Particles[j];
                     float3 r = pos - other.position;
                     float rSq = dot(r, r);
                     if (rSq < h2)
                     {
-                        // Instead of pow(), use multiplication
                         float diff = h2 - rSq;
                         density += other.mass * poly6 * diff * diff * diff;
                     }
@@ -210,148 +176,90 @@ void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
             }
         }
     }
-    // Ensure density is at least the particle's own rest density:
     density = max(density, self.restDensity);
     self.density = density;
-    
-    // Compute a per-particle pressure using Tait’s equation
+
     float localB = self.restDensity * (_SoundSpeed * _SoundSpeed) / _Gamma;
     self.pressure = localB * (pow(self.density / self.restDensity, _Gamma) - 1.0f);
-    
+
     Particles[idx] = self;
 }
 
 // --------------------------------------------------------------------
-// KERNEL: CS_ComputeForces
+// KERNEL: CS_ForceXSPH (Merged CS_ComputeForces & CS_XSPH)
 // --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
-void CS_ComputeForces(uint3 id : SV_DispatchThreadID)
+[numthreads(256, 1, 1)]
+void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
 {
-    int idx = (int) id.x;
-    if (idx >= _ParticleCount)
-        return;
+    int idx = (int)id.x;
+    if (idx >= _ParticleCount) return;
 
     Particle self = Particles[idx];
     float densitySelf = self.density;
     if (densitySelf < EPSILON)
+    {
+        Particles[idx] = self;
         return;
+    }
 
     float h = _SmoothingRadius;
     float h2 = h * h;
-    // Precompute h^6 used in the kernels
-    float h6 = h * h * h * h * h * h;
+    float h6 = pow(h, 6);
     float spikyGradFactor = -45.0f / (PI * h6);
     float viscLapFactor = 45.0f / (PI * h6);
+    float poly6 = 315.0f / (64.0f * PI * pow(h, 9));
 
     float3 force = float3(0.0f, _Gravity * densitySelf, 0.0f);
     float3 colorGradient = float3(0.0f, 0.0f, 0.0f);
-
-    float3 pos = self.position;
-    int3 cell = int3(floor((pos - _MinBound) / _CellSize));
-
-    // Loop over neighboring grid cells
-    for (int z = cell.z - 1; z <= cell.z + 1; z++)
-    {
-        if (z < 0 || z >= _GridResolutionZ)
-            continue;
-        for (int y = cell.y - 1; y <= cell.y + 1; y++)
-        {
-            if (y < 0 || y >= _GridResolutionY)
-                continue;
-            for (int x = cell.x - 1; x <= cell.x + 1; x++)
-            {
-                if (x < 0 || x >= _GridResolutionX)
-                    continue;
-                int neighborCellIndex = x + y * _GridResolutionX + z * _GridResolutionX * _GridResolutionY;
-                int neighborCount = GridCounts[neighborCellIndex];
-                int baseIndex = neighborCellIndex * _MaxParticlesPerCell;
-                for (int k = 0; k < neighborCount; k++)
-                {
-                    int j = GridIndices[baseIndex + k];
-                    if (j == idx)
-                        continue;
-                    Particle other = Particles[j];
-                    float3 r = pos - other.position;
-                    float rSq = dot(r, r);
-                    if (rSq > h2)
-                        continue;
-                    float dist = sqrt(rSq) + EPSILON;
-                    float3 dir = r / dist;
-                    float pressureTerm = (self.pressure / (self.density * self.density)) +
-                                          (other.pressure / (other.density * other.density));
-                    float diff = h - dist;
-                    // Compute gradient and Laplacian without pow():
-                    float3 gradW = spikyGradFactor * diff * diff * dir;
-                    force += -other.mass * pressureTerm * gradW;
-
-                    float3 dv = (other.velocity - self.velocity);
-                    float lapW = viscLapFactor * diff;
-                    float avgViscosity = 0.5f * (self.viscosity + other.viscosity);
-                    force += avgViscosity * other.mass * dv / other.density * lapW;
-
-                    colorGradient += other.mass * gradW / other.density;
-                }
-            }
-        }
-    }
-    float3 surfaceTension = _SurfaceTensionCoefficient * colorGradient;
-    force += surfaceTension;
-
-    self.acceleration = force / densitySelf;
-    Particles[idx] = self;
-}
-
-// --------------------------------------------------------------------
-// KERNEL: CS_XSPH
-// --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
-void CS_XSPH(uint3 id : SV_DispatchThreadID)
-{
-    int idx = (int) id.x;
-    if (idx >= _ParticleCount)
-        return;
-
-    Particle self = Particles[idx];
-    float h = _SmoothingRadius;
-    float h2 = h * h;
-    float poly6 = 315.0f / (64.0f * PI * (h * h * h * h * h * h * h * h * h));
-
     float3 velocityCorrection = float3(0.0f, 0.0f, 0.0f);
     float normFactor = 0.0f;
 
     float3 pos = self.position;
     int3 cell = int3(floor((pos - _MinBound) / _CellSize));
 
-    // Loop over neighboring grid cells
+    // Loop over neighboring grid cells.
     for (int z = cell.z - 1; z <= cell.z + 1; z++)
     {
-        if (z < 0 || z >= _GridResolutionZ)
-            continue;
+        if (z < 0 || z >= _GridResolutionZ) continue;
         for (int y = cell.y - 1; y <= cell.y + 1; y++)
         {
-            if (y < 0 || y >= _GridResolutionY)
-                continue;
+            if (y < 0 || y >= _GridResolutionY) continue;
             for (int x = cell.x - 1; x <= cell.x + 1; x++)
             {
-                if (x < 0 || x >= _GridResolutionX)
-                    continue;
+                if (x < 0 || x >= _GridResolutionX) continue;
                 int neighborCellIndex = x + y * _GridResolutionX + z * _GridResolutionX * _GridResolutionY;
                 int neighborCount = GridCounts[neighborCellIndex];
                 int baseIndex = neighborCellIndex * _MaxParticlesPerCell;
                 for (int k = 0; k < neighborCount; k++)
                 {
                     int j = GridIndices[baseIndex + k];
-                    if (j == idx)
-                        continue;
+                    if (j == idx) continue;
                     Particle other = Particles[j];
                     float3 r = pos - other.position;
                     float rSq = dot(r, r);
                     if (rSq < h2)
                     {
-                        float diff = h2 - rSq;
-                        float W = poly6 * diff * diff * diff;
-                        float rho_ij = 0.5f * (self.density + other.density);
+                        float dist = sqrt(rSq) + EPSILON;
+                        float3 dir = r / dist;
+                        float diff = h - dist;
+
+                        // Force contributions.
+                        float pressureTerm = (self.pressure / (self.density * self.density)) +
+                            (other.pressure / (other.density * other.density));
+                        float3 gradW = spikyGradFactor * diff * diff * dir;
+                        force += -other.mass * pressureTerm * gradW;
+
                         float3 dv = other.velocity - self.velocity;
+                        float lapW = viscLapFactor * diff;
+                        float avgViscosity = 0.5f * (self.viscosity + other.viscosity);
+                        force += avgViscosity * other.mass * dv / other.density * lapW;
+
+                        colorGradient += other.mass * gradW / other.density;
+
+                        // XSPH velocity correction contribution.
+                        float diff2 = h2 - rSq;
+                        float W = poly6 * diff2 * diff2 * diff2;
+                        float rho_ij = 0.5f * (self.density + other.density);
                         velocityCorrection += dv * W * (other.mass / rho_ij);
                         normFactor += W * (other.mass / rho_ij);
                     }
@@ -359,23 +267,29 @@ void CS_XSPH(uint3 id : SV_DispatchThreadID)
             }
         }
     }
+
+    float3 surfaceTension = _SurfaceTensionCoefficient * colorGradient;
+    force += surfaceTension;
+
+    self.acceleration = force / densitySelf;
+
     if (normFactor > EPSILON)
     {
         velocityCorrection *= (_XSPHEpsilon / normFactor);
         self.velocity += velocityCorrection;
     }
+
     Particles[idx] = self;
 }
 
 // --------------------------------------------------------------------
 // KERNEL: CS_VV_HalfStep
 // --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
+[numthreads(256, 1, 1)]
 void CS_VV_HalfStep(uint3 id : SV_DispatchThreadID)
 {
-    int idx = (int) id.x;
-    if (idx >= _ParticleCount)
-        return;
+    int idx = (int)id.x;
+    if (idx >= _ParticleCount) return;
 
     Particle p = Particles[idx];
     p.velocity += 0.5f * _DeltaTime * p.acceleration;
@@ -386,12 +300,11 @@ void CS_VV_HalfStep(uint3 id : SV_DispatchThreadID)
 // --------------------------------------------------------------------
 // KERNEL: CS_VV_FullStep
 // --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
+[numthreads(256, 1, 1)]
 void CS_VV_FullStep(uint3 id : SV_DispatchThreadID)
 {
-    int idx = (int) id.x;
-    if (idx >= _ParticleCount)
-        return;
+    int idx = (int)id.x;
+    if (idx >= _ParticleCount) return;
 
     Particle p = Particles[idx];
     p.velocity += 0.5f * _DeltaTime * p.acceleration;
@@ -399,22 +312,21 @@ void CS_VV_FullStep(uint3 id : SV_DispatchThreadID)
 }
 
 // --------------------------------------------------------------------
-// KERNEL: CS_Boundaries
+// KERNEL: CS_BoundObs (Merged Boundaries & Obstacle Collision)
 // --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
-void CS_Boundaries(uint3 id : SV_DispatchThreadID)
+[numthreads(256, 1, 1)]
+void CS_BoundObs(uint3 id : SV_DispatchThreadID)
 {
-    int idx = (int) id.x;
-    if (idx >= _ParticleCount)
-        return;
+    int idx = (int)id.x;
+    if (idx >= _ParticleCount) return;
 
     Particle p = Particles[idx];
 
+    // --- Boundary Handling ---
     if (length(_BoundaryHalfExtents) > 0.001f)
     {
         float4 localPos4 = mul(_BoundaryInvMatrix, float4(p.position, 1.0f));
         float3 localPos = localPos4.xyz;
-
         float3 E = float3(0.5f, 0.5f, 0.5f);
         float3 penetration = float3(0.0f, 0.0f, 0.0f);
         bool collided = false;
@@ -461,7 +373,6 @@ void CS_Boundaries(uint3 id : SV_DispatchThreadID)
             float4 worldPos = mul(_BoundaryMatrix, float4(localPos, 1.0f));
             p.position = worldPos.xyz;
 
-            // Compute local normal from penetration direction:
             float3 localNormal = float3(0.0f, 0.0f, 0.0f);
             if (penetration.x > 0.0f)
                 localNormal.x = (localPos.x < 0.0f) ? -1.0f : 1.0f;
@@ -471,18 +382,13 @@ void CS_Boundaries(uint3 id : SV_DispatchThreadID)
                 localNormal.z = (localPos.z < 0.0f) ? -1.0f : 1.0f;
             localNormal = normalize(localNormal);
 
-            // Transform local normal to world space
-            float3 worldNormal = normalize(mul((float3x3) _BoundaryMatrix, localNormal));
-
+            float3 worldNormal = normalize(mul((float3x3)_BoundaryMatrix, localNormal));
             float restitutionFactor = 0.1f;
             float frictionFactor = 0.0f;
-
             float3 vNormal = dot(p.velocity, worldNormal) * worldNormal;
             float3 vTangent = p.velocity - vNormal;
-
             vNormal = -vNormal * restitutionFactor;
             vTangent *= (1.0f - frictionFactor);
-
             p.velocity = vNormal + vTangent;
         }
     }
@@ -531,51 +437,36 @@ void CS_Boundaries(uint3 id : SV_DispatchThreadID)
         }
     }
 
-    Particles[idx] = p;
-}
-
-// --------------------------------------------------------------------
-// KERNEL: CS_ObstacleCollision
-// --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
-void CS_ObstacleCollision(uint3 id : SV_DispatchThreadID)
-{
-    int idx = (int) id.x;
-    if (idx >= _ParticleCount)
-        return;
-
-    Particle p = Particles[idx];
-    float obstRadius = _ObstacleRadius;
-    if (obstRadius <= 0.0f)
-        return;
-
-    float3 toParticle = p.position - _ObstaclePos;
-    float dist = length(toParticle);
-
-    if (dist < obstRadius && dist > EPSILON)
+    // --- Obstacle Collision ---
+    if (_ObstacleRadius > 0.0f)
     {
-        float penetration = obstRadius - dist;
-        float3 normal = toParticle / dist;
-        p.position += normal * penetration;
-        p.velocity = reflect(p.velocity, normal) * _ParticleCollisionDamping;
+        float3 toParticle = p.position - _ObstaclePos;
+        float dist = length(toParticle);
+        if (dist < _ObstacleRadius && dist > EPSILON)
+        {
+            float penetration = _ObstacleRadius - dist;
+            float3 normal = toParticle / dist;
+            p.position += normal * penetration;
+            p.velocity = reflect(p.velocity, normal) * _ParticleCollisionDamping;
+        }
+        else if (dist <= EPSILON)
+        {
+            p.position += float3(0.0f, _ObstacleRadius + 0.01f, 0.0f);
+            p.velocity = reflect(p.velocity, float3(0.0f, 1.0f, 0.0f)) * _ParticleCollisionDamping;
+        }
     }
-    else if (dist <= EPSILON)
-    {
-        p.position += float3(0.0f, obstRadius + 0.01f, 0.0f);
-        p.velocity = reflect(p.velocity, float3(0.0f, 1.0f, 0.0f)) * _ParticleCollisionDamping;
-    }
+
     Particles[idx] = p;
 }
 
 // --------------------------------------------------------------------
 // KERNEL: CS_VelocityDamping
 // --------------------------------------------------------------------
-[numthreads(1024, 1, 1)]
+[numthreads(256, 1, 1)]
 void CS_VelocityDamping(uint3 id : SV_DispatchThreadID)
 {
-    int idx = (int) id.x;
-    if (idx >= _ParticleCount)
-        return;
+    int idx = (int)id.x;
+    if (idx >= _ParticleCount) return;
 
     Particle p = Particles[idx];
     float speed = length(p.velocity);

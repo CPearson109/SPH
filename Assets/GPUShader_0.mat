@@ -27,6 +27,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Cube:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DensityTex:
+        m_Texture: {fileID: 8400000, guid: f75ca019d3e4de34faf67ced98091204, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -48,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+        m_Texture: {fileID: 8400000, guid: bfc369167e88e834eae173c5b9d5931f, type: 2}
         m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -69,29 +77,45 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EdgeSoftness: 0.5
+    - _Falloff: 0.1
+    - _FresnelPower: 10
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _IsoLevel: 0.5
+    - _IsoThreshold: 0.5
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PhongExponent: 128
     - _PointSize: 20
+    - _Radius: 0.2
+    - _Reflectivity: 0.7
+    - _RefractionStrength: 0.6
+    - _Shininess: 10
+    - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
+    - _Softness: 0.2
     - _SpecularHighlights: 1
-    - _SphereRadius: 0.08
+    - _SphereRadius: 0.2
     - _SrcBlend: 1
+    - _Threshold: 0.5
     - _UVSec: 0
+    - _WaveScale: 0.3
+    - _WaveSpeed: 1
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.4009434, g: 0.487852, b: 1, a: 1}
+    - _DeepWaterColor: {r: 0.08395386, g: 0, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDir: {r: 0, g: 0, b: 0, a: 0}
     - _ParticleColor: {r: 1, g: 1, b: 1, a: 1}
-    - _PrimaryColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SecondaryColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _PrimaryColor: {r: 0, g: 0.0184803, b: 1, a: 1}
+    - _SecondaryColor: {r: 0, g: 0.6484008, b: 1, a: 1}
+    - _SpecularColor: {r: 0.9339623, g: 0.9339623, b: 0.9339623, a: 1}
+    - _WaterColor: {r: 0, g: 1, b: 0.9683142, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

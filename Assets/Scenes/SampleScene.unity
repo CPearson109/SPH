@@ -413,13 +413,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6066f8eb70b39474792468eb6f155b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleCount: 40000
-  spawnSize: {x: 5, y: 10, z: 5}
-  restDensity: 20
+  particleCount: 100000
+  spawnSize: {x: 10, y: 10, z: 10}
+  restDensity: 10
   viscosity: 0.1
   particleMass: 0.2
   initialVelocity: {x: 0, y: 0, z: 0}
-  particleColor: {r: 0, g: 0.29220223, b: 1, a: 1}
+  particleColor: {r: 0, g: 0.062781096, b: 1, a: 1}
 --- !u!4 &1237233260
 Transform:
   m_ObjectHideFlags: 0
@@ -429,7 +429,7 @@ Transform:
   m_GameObject: {fileID: 1237233258}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -8}
+  m_LocalPosition: {x: 0, y: 5, z: -2.06}
   m_LocalScale: {x: 1.3858, y: 1.3858, z: 1.3858}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -481,8 +481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundSpeed: 10
   gamma: 3
-  stiffness: 800
-  smoothingRadius: 0.28
+  smoothingRadius: 0.3
   gravity: -9.81
   timeStep: 0.02
   subSteps: 1
@@ -492,8 +491,8 @@ MonoBehaviour:
   boundsSize: {x: 10, y: 10, z: 10}
   boundaryCube: {fileID: 1590052269}
   obstacleCollider: {fileID: 1352555874}
-  obstacleRepulsionStiffness: 5000
-  particleCollisionDamping: 1
+  obstacleRepulsionStiffness: 100
+  particleCollisionDamping: 0
   fluidMaterial: {fileID: 2100000, guid: dd40e7b868360c24a878bf764aa4f5a9, type: 2}
   sphCompute: {fileID: 7200000, guid: 0e803cd39b0285949a31f4a2c4db0a3a, type: 3}
   maxParticlesPerCell: 100
@@ -602,7 +601,7 @@ Transform:
   m_GameObject: {fileID: 1352555873}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.88, y: -4.5951133, z: 2.12}
+  m_LocalPosition: {x: -21.72, y: -4.5951133, z: 11.65}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -797,7 +796,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 20, z: 20}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -831,13 +830,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6066f8eb70b39474792468eb6f155b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleCount: 40000
-  spawnSize: {x: 5, y: 10, z: 5}
-  restDensity: 30
+  particleCount: 100000
+  spawnSize: {x: 10, y: 10, z: 5}
+  restDensity: 20
   viscosity: 0.5
   particleMass: 0.2
   initialVelocity: {x: 0, y: 0, z: 0}
-  particleColor: {r: 1, g: 0.81773376, b: 0, a: 1}
+  particleColor: {r: 1, g: 0.78312325, b: 0, a: 1}
 --- !u!4 &1697105304
 Transform:
   m_ObjectHideFlags: 0

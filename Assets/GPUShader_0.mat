@@ -71,29 +71,38 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _WaterGrabTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EdgeSoftness: 0.5
+    - _EdgeSoftness: 0
     - _Falloff: 0.1
-    - _FresnelPower: 10
+    - _FresnelPower: 3
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _IsoLevel: 0.5
     - _IsoThreshold: 0.5
+    - _MaxDistance: 10
+    - _MaxRayDistance: 10
     - _Metallic: 0
     - _Mode: 0
+    - _NumRaySteps: 52
+    - _NumSteps: 64
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PhongExponent: 128
     - _PointSize: 20
     - _Radius: 0.2
-    - _Reflectivity: 0.7
-    - _RefractionStrength: 0.6
+    - _Reflectivity: 0.585
+    - _RefractionStrength: 1
+    - _RenderScale: 10
     - _Shininess: 10
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
@@ -107,6 +116,7 @@ Material:
     - _WaveSpeed: 1
     - _ZWrite: 1
     m_Colors:
+    - _Center: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.4009434, g: 0.487852, b: 1, a: 1}
     - _DeepWaterColor: {r: 0.08395386, g: 0, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -115,7 +125,7 @@ Material:
     - _ParticleColor: {r: 1, g: 1, b: 1, a: 1}
     - _PrimaryColor: {r: 0, g: 0.0184803, b: 1, a: 1}
     - _SecondaryColor: {r: 0, g: 0.6484008, b: 1, a: 1}
-    - _SpecularColor: {r: 0.9339623, g: 0.9339623, b: 0.9339623, a: 1}
+    - _SpecularColor: {r: 0, g: 0.011662006, b: 1, a: 1}
     - _WaterColor: {r: 0, g: 1, b: 0.9683142, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

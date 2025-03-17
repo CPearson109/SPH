@@ -3,8 +3,8 @@
 #pragma kernel CS_BuildGrid
 #pragma kernel CS_DensityPressure
 #pragma kernel CS_ForceXSPH
-#pragma kernel CS_VV_HalfStep
-#pragma kernel CS_VV_FullStep
+#pragma kernel CS_VvHalfStep
+#pragma kernel CS_VvFullStep
 #pragma kernel CS_BoundObs
 #pragma kernel CS_VelocityDamping
 
@@ -38,6 +38,7 @@ struct Particle
 RWStructuredBuffer<Particle> Particles;
 RWStructuredBuffer<int> GridCounts;
 RWStructuredBuffer<int> GridIndices;
+RWStructuredBuffer<int> CollisionCounter; // New buffer for collision count
 
 // --------------------------------------------------------------------
 // Simulation Parameters
@@ -283,10 +284,10 @@ void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
 }
 
 // --------------------------------------------------------------------
-// KERNEL: CS_VV_HalfStep
+// KERNEL: CS_VvHalfStep
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
-void CS_VV_HalfStep(uint3 id : SV_DispatchThreadID)
+void CS_VvHalfStep(uint3 id : SV_DispatchThreadID)
 {
     int idx = (int)id.x;
     if (idx >= _ParticleCount) return;
@@ -298,10 +299,10 @@ void CS_VV_HalfStep(uint3 id : SV_DispatchThreadID)
 }
 
 // --------------------------------------------------------------------
-// KERNEL: CS_VV_FullStep
+// KERNEL: CS_VvFullStep
 // --------------------------------------------------------------------
 [numthreads(256, 1, 1)]
-void CS_VV_FullStep(uint3 id : SV_DispatchThreadID)
+void CS_VvFullStep(uint3 id : SV_DispatchThreadID)
 {
     int idx = (int)id.x;
     if (idx >= _ParticleCount) return;
@@ -390,6 +391,9 @@ void CS_BoundObs(uint3 id : SV_DispatchThreadID)
             vNormal = -vNormal * restitutionFactor;
             vTangent *= (1.0f - frictionFactor);
             p.velocity = vNormal + vTangent;
+
+            // Record collision event by incrementing the counter.
+            InterlockedAdd(CollisionCounter[0], 1);
         }
     }
     else

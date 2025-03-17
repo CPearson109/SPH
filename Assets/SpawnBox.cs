@@ -1,31 +1,27 @@
 using UnityEngine;
 
-[ExecuteAlways] // So it also draws the spawn box gizmo in edit mode
+[ExecuteAlways]
 public class SpawnBox : MonoBehaviour
 {
     [Header("Spawn Box Settings")]
-    [Tooltip("Number of particles to spawn from this box.")]
     public int particleCount = 1000;
-
-    [Tooltip("Size of the spawn box.")]
     public Vector3 spawnSize = new Vector3(2f, 2f, 2f);
 
-    [Tooltip("Rest density for particles spawned from this box.")]
+    [Tooltip("Per-particle rest density.")]
     public float restDensity = 1000f;
 
-    [Tooltip("Viscosity for particles spawned from this box.")]
+    [Tooltip("Per-particle viscosity.")]
     public float viscosity = 0.1f;
 
-    [Tooltip("Mass for particles spawned from this box.")]
+    [Tooltip("Per-particle mass.")]
     public float particleMass = 0.03f;
 
-    [Tooltip("Initial velocity for particles spawned from this box.")]
+    [Tooltip("Initial velocity for spawned particles.")]
     public Vector3 initialVelocity = Vector3.zero;
 
-    [Tooltip("Color for particles spawned from this box (for multiphase visualization).")]
+    [Tooltip("Particle color (alpha < 1 for blending).")]
     public Color particleColor = Color.white;
 
-    // A convenient property: the center is just the GameObject's position.
     public Vector3 SpawnCenter => transform.position;
 
     private void OnDrawGizmos()

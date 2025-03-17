@@ -14,6 +14,8 @@ public class SPH : MonoBehaviour
 
     [Header("Surface Tension")]
     public float surfaceTensionCoefficient = 0.03f;
+    // New parameter: only apply surface tension when the color field gradient exceeds this value.
+    public float surfaceTensionThreshold = 0.01f;
 
     [Header("XSPH Settings")]
     public float xsphEpsilon = 0.5f;
@@ -392,6 +394,8 @@ public class SPH : MonoBehaviour
         sphCompute.SetFloat("_SmoothingRadius", smoothingRadius);
         sphCompute.SetFloat("_Gravity", gravity);
         sphCompute.SetFloat("_SurfaceTensionCoefficient", surfaceTensionCoefficient);
+        // Send the new threshold value for surface tension.
+        sphCompute.SetFloat("_SurfaceTensionThreshold", surfaceTensionThreshold);
         sphCompute.SetFloat("_XSPHEpsilon", xsphEpsilon);
         sphCompute.SetFloat("_ParticleCollisionDamping", particleCollisionDamping);
         sphCompute.SetFloat("_ObstacleRepulsionStiffness", obstacleRepulsionStiffness);

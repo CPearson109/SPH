@@ -56,6 +56,7 @@ cbuffer SimulationParams
     float _SmoothingRadius;
     float _Gravity;
     float _SurfaceTensionCoefficient;
+    float _SurfaceTensionThreshold; // New threshold parameter
     float _XSPHEpsilon;
     float _ParticleCollisionDamping;
     float _ObstacleRepulsionStiffness;
@@ -205,13 +206,14 @@ void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
 
     float h = _SmoothingRadius;
     float h2 = h * h;
-    float h6 = pow(h, 6);
-    float spikyGradFactor = -45.0f / (PI * h6);
-    float viscLapFactor = 45.0f / (PI * h6);
+    // Using spiky kernel for gradient
+    float spikyGradFactor = -45.0f / (PI * pow(h, 6));
+    // Poly6 constant for density estimation
     float poly6 = 315.0f / (64.0f * PI * pow(h, 9));
 
     float3 force = float3(0.0f, _Gravity * densitySelf, 0.0f);
     float3 colorGradient = float3(0.0f, 0.0f, 0.0f);
+    float colorLaplacian = 0.0f; // Accumulator for the Laplacian of the color field
     float3 velocityCorrection = float3(0.0f, 0.0f, 0.0f);
     float normFactor = 0.0f;
 
@@ -242,20 +244,27 @@ void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
                     {
                         float dist = sqrt(rSq) + EPSILON;
                         float3 dir = r / dist;
-                        float diff = h - dist;
+                        float diff = h2 - rSq; // For poly6 kernel
 
-                        // Force contributions.
+                        // Pressure force contribution.
                         float pressureTerm = (self.pressure / (self.density * self.density)) +
                             (other.pressure / (other.density * other.density));
                         float3 gradW = spikyGradFactor * diff * diff * dir;
                         force += -other.mass * pressureTerm * gradW;
 
+                        // Viscosity force contribution.
                         float3 dv = other.velocity - self.velocity;
-                        float lapW = viscLapFactor * diff;
+                        float viscLapFactor = 45.0f / (PI * pow(h, 6));
+                        float lapW_visc = viscLapFactor * (h - dist);
                         float avgViscosity = 0.5f * (self.viscosity + other.viscosity);
-                        force += avgViscosity * other.mass * dv / other.density * lapW;
+                        force += avgViscosity * other.mass * dv / other.density * lapW_visc;
 
+                        // Accumulate color field gradient and Laplacian for surface tension.
                         colorGradient += other.mass * gradW / other.density;
+                        // Compute Laplacian of the poly6 kernel:
+                        // Laplacian(W_poly6) = - (1890 / (64 * PI * h^9)) * (h2 - rSq) * (h2 - 5*rSq)
+                        float lapW = -(1890.0 / (64.0 * PI * pow(h, 9))) * (h2 - rSq) * (h2 - 5.0 * rSq);
+                        colorLaplacian += other.mass * lapW / other.density;
 
                         // XSPH velocity correction contribution.
                         float diff2 = h2 - rSq;
@@ -269,8 +278,15 @@ void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
         }
     }
 
-    float3 surfaceTension = _SurfaceTensionCoefficient * colorGradient;
-    force += surfaceTension;
+    // Compute surface tension force using a curvature formulation:
+    // F_surface = -sigma * curvature * n, where curvature = (Laplacian(color)) / (|grad(color)| + EPSILON)
+    float gradMag = length(colorGradient);
+    if (gradMag > _SurfaceTensionThreshold)
+    {
+        float curvature = colorLaplacian / (gradMag + EPSILON);
+        float3 stForce = -_SurfaceTensionCoefficient * curvature * (colorGradient / gradMag);
+        force += stForce;
+    }
 
     self.acceleration = force / densitySelf;
 

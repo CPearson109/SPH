@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6066f8eb70b39474792468eb6f155b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleCount: 10000
+  particleCount: 200000
   spawnSize: {x: 10, y: 10, z: 10}
   restDensity: 10
   viscosity: 0.1
@@ -603,10 +603,11 @@ MonoBehaviour:
   soundSpeed: 10
   gamma: 2.8
   smoothingRadius: 0.3
-  gravity: 0
-  timeStep: 0.025
+  gravity: -9.81
+  timeStep: 0.02
   subSteps: 1
-  surfaceTensionCoefficient: 0.2
+  surfaceTensionCoefficient: 0.01
+  surfaceTensionThreshold: 0.01
   xsphEpsilon: 0.2
   boundsCenter: {x: 0, y: 5, z: 0}
   boundsSize: {x: 10, y: 10, z: 10}
@@ -917,7 +918,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 10, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 40}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

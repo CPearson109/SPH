@@ -550,7 +550,7 @@ Transform:
   m_GameObject: {fileID: 1237233258}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: -5}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1.3858, y: 1.3858, z: 1.3858}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -601,11 +601,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundSpeed: 10
-  gamma: 2.8
+  gamma: 3
   smoothingRadius: 0.3
   gravity: -9.81
   timeStep: 0.02
-  subSteps: 1
+  subSteps: 2
   surfaceTensionCoefficient: 0.01
   surfaceTensionThreshold: 0.01
   xsphEpsilon: 0.2
@@ -614,13 +614,15 @@ MonoBehaviour:
   boundaryCube: {fileID: 1590052269}
   obstacleCollider: {fileID: 1352555874}
   obstacleRepulsionStiffness: 100
-  particleCollisionDamping: 0
+  particleCollisionDamping: 1
   fluidMaterial: {fileID: 2100000, guid: dd40e7b868360c24a878bf764aa4f5a9, type: 2}
   sphCompute: {fileID: 7200000, guid: 0e803cd39b0285949a31f4a2c4db0a3a, type: 3}
   maxParticlesPerCell: 500
+  gridResolution: 100
   spawnBoxes:
   - {fileID: 1237233259}
   - {fileID: 1697105303}
+  totalCells: 0
 --- !u!1 &1352555873
 GameObject:
   m_ObjectHideFlags: 0

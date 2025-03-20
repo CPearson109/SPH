@@ -5,7 +5,7 @@ public class SPH : MonoBehaviour
     [Header("Particle Settings")]
     public float soundSpeed = 20f;
     public float gamma = 7f;
-    public float smoothingRadius = 0.2f;
+    public float smoothingRadius = 0.2f;  // Still used in SPH physics but not for grid sizing.
     public float gravity = -9.81f;
 
     [Header("Time Settings")]
@@ -41,6 +41,10 @@ public class SPH : MonoBehaviour
     [Header("Grid Settings")]
     public int maxParticlesPerCell = 100;
 
+    [Header("Grid Resolution")]
+    [Tooltip("Number of cells along the smallest axis of the boundary. The grid will expand accordingly to cover the entire boundary.")]
+    public int gridResolution = 50;
+
     [Header("Spawn Boxes")]
     public SpawnBox[] spawnBoxes;
 
@@ -72,8 +76,9 @@ public class SPH : MonoBehaviour
 
     // Grid
     private int gridResolutionX, gridResolutionY, gridResolutionZ;
-    private int totalCells;
+    public int totalCells; // Made public for potential external use.
     private Vector3 gridMin;
+    private float cellSize;  // Computed cell size based on boundary size and gridResolution
 
     // Kernel IDs
     private int kernel_Clear;
@@ -95,6 +100,11 @@ public class SPH : MonoBehaviour
     private Vector3 lastBoundaryCubePosition;
     private Quaternion lastBoundaryCubeRotation;
     private const float boundaryUpdateThreshold = 0.001f;
+
+    // New FPS tracking variables.
+    private float elapsedTime = 0f;
+    private int frameCount = 0;
+    private bool hasPrintedFPS = false;
 
     // -------------------------------------------------------
     // Expose total particles and the particle buffer
@@ -130,21 +140,26 @@ public class SPH : MonoBehaviour
         // Create particle buffer
         CreateParticles();
 
-        // Setup initial grid
+        // Setup initial grid automatically based on boundary cube or fallback bounds.
         if (boundaryCube == null)
         {
+            // Use boundsCenter and boundsSize as fallback.
             Vector3 half = boundsSize * 0.5f;
             gridMin = boundsCenter - half;
-            gridResolutionX = Mathf.CeilToInt(boundsSize.x / smoothingRadius);
-            gridResolutionY = Mathf.CeilToInt(boundsSize.y / smoothingRadius);
-            gridResolutionZ = Mathf.CeilToInt(boundsSize.z / smoothingRadius);
+            Vector3 gridSize = boundsSize;
+            // Use the smallest dimension to define the cell size.
+            float minSize = Mathf.Min(gridSize.x, gridSize.y, gridSize.z);
+            cellSize = minSize / gridResolution;
+            gridResolutionX = Mathf.CeilToInt(gridSize.x / cellSize);
+            gridResolutionY = Mathf.CeilToInt(gridSize.y / cellSize);
+            gridResolutionZ = Mathf.CeilToInt(gridSize.z / cellSize);
             totalCells = gridResolutionX * gridResolutionY * gridResolutionZ;
         }
         else
         {
+            UpdateGridParametersFromBoundary();
             lastBoundaryCubePosition = boundaryCube.position;
             lastBoundaryCubeRotation = boundaryCube.rotation;
-            UpdateGridParametersFromBoundary();
         }
 
         gridCountsBuffer = new ComputeBuffer(totalCells, sizeof(int));
@@ -167,7 +182,7 @@ public class SPH : MonoBehaviour
 
     void Update()
     {
-        // If boundaryCube moved significantly
+        // If boundaryCube moved significantly, update grid parameters.
         if (boundaryCube != null)
         {
             if (Vector3.Distance(boundaryCube.position, lastBoundaryCubePosition) > boundaryUpdateThreshold ||
@@ -184,11 +199,11 @@ public class SPH : MonoBehaviour
         // Reset collision counter buffer to zero at the start of the frame.
         collisionCounterBuffer.SetData(new int[] { 0 });
 
-        // Re-send params
+        // Re-send parameters.
         SetComputeParams();
         BindBuffers();
 
-        // Update static properties (density, color, etc.) occasionally
+        // Update static properties (density, color, etc.) occasionally.
         staticUpdateTimer += Time.deltaTime;
         if (staticUpdateTimer >= staticUpdateInterval)
         {
@@ -196,13 +211,13 @@ public class SPH : MonoBehaviour
             staticUpdateTimer = 0f;
         }
 
-        // 1) Clear grid
+        // 1) Clear grid.
         DispatchCompute(kernel_ClearGrid, totalCells);
 
-        // 2) Build grid
+        // 2) Build grid.
         DispatchCompute(kernel_BuildGrid, particleCount);
 
-        // Sub-step
+        // Sub-step integration using dtSub.
         float dtSub = timeStep / subSteps;
         sphCompute.SetFloat("_DeltaTime", dtSub);
 
@@ -213,26 +228,27 @@ public class SPH : MonoBehaviour
             DispatchCompute(kernel_DensityPressure, particleCount);
             DispatchCompute(kernel_ForceXSPH, particleCount);
             DispatchCompute(kernel_VvFullStep, particleCount);
-            // The boundary and obstacle handling kernel now writes into the collision counter.
+            // The boundary and obstacle handling kernel writes into the collision counter.
             DispatchCompute(kernel_BoundObs, particleCount);
         }
 
-        // Slight damping
+        // Apply slight velocity damping.
         DispatchCompute(kernel_VelocityDamping, particleCount);
 
-        // Read back collision counter and log if any collisions were detected.
-        int[] collisionCountArray = new int[1];
-        collisionCounterBuffer.GetData(collisionCountArray);
-        int collisions = collisionCountArray[0];
-        if (collisions > 0)
+        // --- FPS Tracking ---
+        frameCount++;
+        elapsedTime += Time.deltaTime;
+        if (!hasPrintedFPS && elapsedTime >= 15f)
         {
-            Debug.Log("Boundary collision detected for " + collisions + " particle(s) this frame.");
+            float avgFPS = frameCount / elapsedTime;
+            Debug.Log("Average FPS after 15 seconds: " + avgFPS);
+            hasPrintedFPS = true;
         }
     }
 
     void OnRenderObject()
     {
-        // If using billboard-based rendering, draw the particles as points
+        // If using billboard-based rendering, draw the particles as points.
         if (fluidMaterial != null)
         {
             fluidMaterial.SetPass(1);
@@ -257,7 +273,6 @@ public class SPH : MonoBehaviour
         particleBuffer = new ComputeBuffer(particleCount, stride);
 
         Particle[] initArray = new Particle[particleCount];
-
         int index = 0;
         foreach (var sb in spawnBoxes)
         {
@@ -292,7 +307,7 @@ public class SPH : MonoBehaviour
 
     private void UpdateParticleStaticProperties()
     {
-        // read from GPU
+        // Read from GPU.
         particleBuffer.GetData(particleArray);
         for (int i = 0; i < particleCount; i++)
         {
@@ -302,17 +317,19 @@ public class SPH : MonoBehaviour
             particleArray[i].mass = sb.particleMass;
             particleArray[i].color = sb.particleColor;
         }
-        // push back
+        // Push back to GPU.
         particleBuffer.SetData(particleArray);
     }
 
     // -------------------------------------------------------
-    // Grid / boundary
+    // Grid / Boundary Setup
     // -------------------------------------------------------
     private void UpdateGridParametersFromBoundary()
     {
-        if (boundaryCube == null) return;
+        if (boundaryCube == null)
+            return;
 
+        // Get the eight corners of the boundary cube.
         Vector3[] corners = new Vector3[8];
         corners[0] = boundaryCube.TransformPoint(new Vector3(-0.5f, -0.5f, -0.5f));
         corners[1] = boundaryCube.TransformPoint(new Vector3(0.5f, -0.5f, -0.5f));
@@ -330,29 +347,26 @@ public class SPH : MonoBehaviour
             newMin = Vector3.Min(newMin, corners[i]);
             newMax = Vector3.Max(newMax, corners[i]);
         }
-
-        Vector3 newSize = newMax - newMin;
+        Vector3 gridSize = newMax - newMin;
         gridMin = newMin;
 
-        int newGridX = Mathf.CeilToInt(newSize.x / smoothingRadius);
-        int newGridY = Mathf.CeilToInt(newSize.y / smoothingRadius);
-        int newGridZ = Mathf.CeilToInt(newSize.z / smoothingRadius);
+        // Use the user-defined gridResolution without clamping.
+        int effectiveGridRes = gridResolution;
+        float minSize = Mathf.Min(gridSize.x, gridSize.y, gridSize.z);
+        cellSize = minSize / effectiveGridRes;
+        gridResolutionX = Mathf.CeilToInt(gridSize.x / cellSize);
+        gridResolutionY = Mathf.CeilToInt(gridSize.y / cellSize);
+        gridResolutionZ = Mathf.CeilToInt(gridSize.z / cellSize);
+        totalCells = gridResolutionX * gridResolutionY * gridResolutionZ;
 
-        int newTotal = newGridX * newGridY * newGridZ;
-        if (newTotal != totalCells)
+        // Reallocate grid buffers with the new total cell count.
+        if (gridCountsBuffer != null)
         {
-            gridCountsBuffer?.Release();
-            gridIndicesBuffer?.Release();
-
-            gridCountsBuffer = new ComputeBuffer(newTotal, sizeof(int));
-            gridIndicesBuffer = new ComputeBuffer(newTotal * maxParticlesPerCell, sizeof(int));
-
-            totalCells = newTotal;
+            gridCountsBuffer.Release();
+            gridIndicesBuffer.Release();
         }
-
-        gridResolutionX = newGridX;
-        gridResolutionY = newGridY;
-        gridResolutionZ = newGridZ;
+        gridCountsBuffer = new ComputeBuffer(totalCells, sizeof(int));
+        gridIndicesBuffer = new ComputeBuffer(totalCells * maxParticlesPerCell, sizeof(int));
     }
 
     private void UpdateObstacle()
@@ -371,7 +385,7 @@ public class SPH : MonoBehaviour
     }
 
     // -------------------------------------------------------
-    // Kernels
+    // Kernel Setup and Dispatch
     // -------------------------------------------------------
     private void GetKernelIDs()
     {
@@ -391,10 +405,10 @@ public class SPH : MonoBehaviour
         sphCompute.SetInt("_ParticleCount", particleCount);
         sphCompute.SetFloat("_SoundSpeed", soundSpeed);
         sphCompute.SetFloat("_Gamma", gamma);
+        // _SmoothingRadius remains available for fluid physics.
         sphCompute.SetFloat("_SmoothingRadius", smoothingRadius);
         sphCompute.SetFloat("_Gravity", gravity);
         sphCompute.SetFloat("_SurfaceTensionCoefficient", surfaceTensionCoefficient);
-        // Send the new threshold value for surface tension.
         sphCompute.SetFloat("_SurfaceTensionThreshold", surfaceTensionThreshold);
         sphCompute.SetFloat("_XSPHEpsilon", xsphEpsilon);
         sphCompute.SetFloat("_ParticleCollisionDamping", particleCollisionDamping);
@@ -404,7 +418,8 @@ public class SPH : MonoBehaviour
         sphCompute.SetInt("_GridResolutionY", gridResolutionY);
         sphCompute.SetInt("_GridResolutionZ", gridResolutionZ);
         sphCompute.SetInt("_MaxParticlesPerCell", maxParticlesPerCell);
-        sphCompute.SetFloat("_CellSize", smoothingRadius);
+        // Use the computed cellSize instead of smoothingRadius.
+        sphCompute.SetFloat("_CellSize", cellSize);
         sphCompute.SetVector("_MinBound", gridMin);
 
         if (boundaryCube != null)
@@ -443,7 +458,7 @@ public class SPH : MonoBehaviour
         sphCompute.SetBuffer(kernel_ForceXSPH, "GridCounts", gridCountsBuffer);
         sphCompute.SetBuffer(kernel_ForceXSPH, "GridIndices", gridIndicesBuffer);
 
-        // Bind collision counter buffer for boundary kernel.
+        // Bind collision counter buffer for the boundary kernel.
         sphCompute.SetBuffer(kernel_BoundObs, "CollisionCounter", collisionCounterBuffer);
     }
 

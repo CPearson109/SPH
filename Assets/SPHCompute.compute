@@ -400,7 +400,7 @@ void CS_BoundObs(uint3 id : SV_DispatchThreadID)
             localNormal = normalize(localNormal);
 
             float3 worldNormal = normalize(mul((float3x3)_BoundaryMatrix, localNormal));
-            float restitutionFactor = 0.1f;
+            float restitutionFactor = 1.f;
             float frictionFactor = 0.0f;
             float3 vNormal = dot(p.velocity, worldNormal) * worldNormal;
             float3 vTangent = p.velocity - vNormal;

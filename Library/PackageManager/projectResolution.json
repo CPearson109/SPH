@@ -8,22 +8,6 @@
     "D:\\SPH\\Packages\\packages-lock.json"
   ],
   "outputs": {
-    "com.unity.ai.navigation@2.0.5": {
-      "name": "com.unity.ai.navigation",
-      "resolvedPath": "D:\\SPH\\Library\\PackageCache\\com.unity.ai.navigation",
-      "fingerprint": "9f76b145f0a8dd734ff2a4877f7f7edb83b7f62c",
-      "editorCompatibility": "2023.2.0a18",
-      "version": "2.0.5",
-      "source": "registry"
-    },
-    "com.unity.burst@1.8.19": {
-      "name": "com.unity.burst",
-      "resolvedPath": "D:\\SPH\\Library\\PackageCache\\com.unity.burst",
-      "fingerprint": "7a907cf5a4591e4e25f4203e3be84f240058c34d",
-      "editorCompatibility": "2020.3.0a1",
-      "version": "1.8.19",
-      "source": "registry"
-    },
     "com.unity.collab-proxy@2.6.0": {
       "name": "com.unity.collab-proxy",
       "resolvedPath": "D:\\SPH\\Library\\PackageCache\\com.unity.collab-proxy",
@@ -55,14 +39,6 @@
       "editorCompatibility": "2019.4.0a1",
       "version": "1.11.2",
       "source": "registry"
-    },
-    "com.unity.multiplayer.center@1.0.0": {
-      "name": "com.unity.multiplayer.center",
-      "resolvedPath": "D:\\SPH\\Library\\PackageCache\\com.unity.multiplayer.center",
-      "fingerprint": "f502d8ac613fa076192423e73892fbd89eb4049b",
-      "editorCompatibility": "6000.0.0a1",
-      "version": "1.0.0",
-      "source": "builtin"
     },
     "com.unity.test-framework@1.4.5": {
       "name": "com.unity.test-framework",
@@ -306,14 +282,6 @@
       "fingerprint": "60ef35ffd3cd5e2f5c8887a4a4ca6148854cd092",
       "editorCompatibility": "2019.4.0a1",
       "version": "2.0.5",
-      "source": "registry"
-    },
-    "com.unity.mathematics@1.3.2": {
-      "name": "com.unity.mathematics",
-      "resolvedPath": "D:\\SPH\\Library\\PackageCache\\com.unity.mathematics",
-      "fingerprint": "8017b507cc74bf0a1dd14b18aa860569f807314d",
-      "editorCompatibility": "2021.3.0a1",
-      "version": "1.3.2",
       "source": "registry"
     }
   }

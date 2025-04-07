@@ -81,7 +81,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EdgeSoftness: 0
+    - _EdgeSoftness: 0.409
     - _Falloff: 0.1
     - _FresnelPower: 3
     - _GlossMapScale: 1
@@ -100,10 +100,10 @@ Material:
     - _PhongExponent: 128
     - _PointSize: 20
     - _Radius: 0.2
-    - _Reflectivity: 0.585
+    - _Reflectivity: 0
     - _RefractionStrength: 1
     - _RenderScale: 10
-    - _Shininess: 10
+    - _Shininess: 9.38
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
     - _Softness: 0.2
@@ -112,8 +112,8 @@ Material:
     - _SrcBlend: 1
     - _Threshold: 0.5
     - _UVSec: 0
-    - _WaveScale: 0.3
-    - _WaveSpeed: 1
+    - _WaveScale: 6.56
+    - _WaveSpeed: 4.94
     - _ZWrite: 1
     m_Colors:
     - _Center: {r: 0, g: 0, b: 0, a: 0}
@@ -125,7 +125,7 @@ Material:
     - _ParticleColor: {r: 1, g: 1, b: 1, a: 1}
     - _PrimaryColor: {r: 0, g: 0.0184803, b: 1, a: 1}
     - _SecondaryColor: {r: 0, g: 0.6484008, b: 1, a: 1}
-    - _SpecularColor: {r: 0, g: 0.011662006, b: 1, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _WaterColor: {r: 0, g: 1, b: 0.9683142, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

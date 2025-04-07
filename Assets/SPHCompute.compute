@@ -1,4 +1,12 @@
-﻿#pragma kernel CS_Clear
+﻿//------------------------------------------------------------------------------
+// SPH Compute Shader
+//------------------------------------------------------------------------------
+// This file implements a Smoothed Particle Hydrodynamics (SPH) fluid simulation 
+// using compute shaders in Unity.
+//------------------------------------------------------------------------------
+
+// Kernel Declarations
+#pragma kernel CS_Clear
 #pragma kernel CS_ClearGrid
 #pragma kernel CS_BuildGrid
 #pragma kernel CS_DensityPressure
@@ -8,20 +16,13 @@
 #pragma kernel CS_BoundObs
 #pragma kernel CS_VelocityDamping
 
+// Constants
 static const float PI = 3.14159265359;
 static const float EPSILON = 1e-6;
 
-// --------------------------------------------------------------------
-// Utility: Pseudo-Random Generator
-// --------------------------------------------------------------------
-float rand(float2 co)
-{
-    return frac(sin(dot(co, float2(12.9898, 78.233))) * 43758.5453);
-}
-
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Data Structures
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
 struct Particle
 {
     float3 position;
@@ -29,34 +30,34 @@ struct Particle
     float3 acceleration;
     float density;
     float pressure;
-    float restDensity; // per-particle rest density
-    float viscosity;   // per-particle viscosity for multiphase fluids
-    float mass;        // per-particle mass
-    float4 color;      // per-particle color (for multiphase visualization)
+    float restDensity; // Per-particle rest density.
+    float viscosity;   // Per-particle viscosity (supports multiphase fluids).
+    float mass;        // Per-particle mass.
+    float4 color;      // Per-particle color (for multiphase visualization).
 };
 
 RWStructuredBuffer<Particle> Particles;
 RWStructuredBuffer<int> GridCounts;
 RWStructuredBuffer<int> GridIndices;
-RWStructuredBuffer<int> CollisionCounter; // New buffer for collision count
+RWStructuredBuffer<int> CollisionCounter; // Collision counter buffer.
 
-// --------------------------------------------------------------------
-// Simulation Parameters
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// Simulation Parameters (set from C#)
+//------------------------------------------------------------------------------
 cbuffer SimulationParams
 {
     int _ParticleCount;
     float _DeltaTime;
 
-    float _ParticleMass; // kept for backward compatibility
-    float _RestDensity;  // Global rest density (used for initialization)
+    float _ParticleMass; // Kept for backward compatibility.
+    float _RestDensity;  // Global rest density (used for initialization).
     float _SoundSpeed;
     float _Gamma;
 
     float _SmoothingRadius;
     float _Gravity;
     float _SurfaceTensionCoefficient;
-    float _SurfaceTensionThreshold; // New threshold parameter
+    float _SurfaceTensionThreshold; // Surface tension activation threshold.
     float _XSPHEpsilon;
     float _ParticleCollisionDamping;
     float _ObstacleRepulsionStiffness;
@@ -79,9 +80,10 @@ cbuffer SimulationParams
     float3 _BoundaryHalfExtents;
 }
 
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // KERNEL: CS_Clear
-// --------------------------------------------------------------------
+// Resets per-particle acceleration, density, and pressure.
+//------------------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_Clear(uint3 id : SV_DispatchThreadID)
 {
@@ -90,14 +92,15 @@ void CS_Clear(uint3 id : SV_DispatchThreadID)
 
     Particle p = Particles[idx];
     p.acceleration = 0.0;
-    p.density = p.restDensity; // Reset density to rest density
+    p.density = p.restDensity; // Reset density to rest density.
     p.pressure = 0.0;
     Particles[idx] = p;
 }
 
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // KERNEL: CS_ClearGrid
-// --------------------------------------------------------------------
+// Clears the grid by resetting particle counts in each cell.
+//------------------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_ClearGrid(uint3 id : SV_DispatchThreadID)
 {
@@ -107,9 +110,10 @@ void CS_ClearGrid(uint3 id : SV_DispatchThreadID)
     GridCounts[cellIndex] = 0;
 }
 
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // KERNEL: CS_BuildGrid
-// --------------------------------------------------------------------
+// Computes the grid cell index for each particle and records its index in the grid.
+//------------------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
 {
@@ -131,9 +135,10 @@ void CS_BuildGrid(uint3 id : SV_DispatchThreadID)
     }
 }
 
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // KERNEL: CS_DensityPressure
-// --------------------------------------------------------------------
+// Computes density and pressure for each particle using a poly6 kernel.
+//------------------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
 {
@@ -143,13 +148,13 @@ void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
     Particle self = Particles[idx];
     float h = _SmoothingRadius;
     float h2 = h * h;
-    // Precompute the poly6 kernel constant once per kernel invocation.
     float poly6 = 315.0f / (64.0f * PI * pow(h, 9));
     float density = 0.0f;
 
     float3 pos = self.position;
     int3 cell = int3(floor((pos - _MinBound) / _CellSize));
 
+    // Loop over neighboring cells.
     for (int z = cell.z - 1; z <= cell.z + 1; z++)
     {
         if (z < 0 || z >= _GridResolutionZ) continue;
@@ -187,9 +192,10 @@ void CS_DensityPressure(uint3 id : SV_DispatchThreadID)
     Particles[idx] = self;
 }
 
-// --------------------------------------------------------------------
-// KERNEL: CS_ForceXSPH (Merged CS_ComputeForces & CS_XSPH)
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// KERNEL: CS_ForceXSPH
+// Computes pressure, viscosity, surface tension forces and applies XSPH velocity correction.
+//------------------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
 {
@@ -206,21 +212,20 @@ void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
 
     float h = _SmoothingRadius;
     float h2 = h * h;
-    // Using spiky kernel for gradient
     float spikyGradFactor = -45.0f / (PI * pow(h, 6));
-    // Poly6 constant for density estimation
     float poly6 = 315.0f / (64.0f * PI * pow(h, 9));
 
+    // Initialize force, color field accumulators, and XSPH correction.
     float3 force = float3(0.0f, _Gravity * densitySelf, 0.0f);
     float3 colorGradient = float3(0.0f, 0.0f, 0.0f);
-    float colorLaplacian = 0.0f; // Accumulator for the Laplacian of the color field
+    float colorLaplacian = 0.0f;
     float3 velocityCorrection = float3(0.0f, 0.0f, 0.0f);
     float normFactor = 0.0f;
 
     float3 pos = self.position;
     int3 cell = int3(floor((pos - _MinBound) / _CellSize));
 
-    // Loop over neighboring grid cells.
+    // Loop over neighboring cells.
     for (int z = cell.z - 1; z <= cell.z + 1; z++)
     {
         if (z < 0 || z >= _GridResolutionZ) continue;
@@ -244,29 +249,27 @@ void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
                     {
                         float dist = sqrt(rSq) + EPSILON;
                         float3 dir = r / dist;
-                        float diff = h2 - rSq; // For poly6 kernel
+                        float diff = h2 - rSq;
 
-                        // Pressure force contribution.
+                        // Pressure force.
                         float pressureTerm = (self.pressure / (self.density * self.density)) +
                             (other.pressure / (other.density * other.density));
                         float3 gradW = spikyGradFactor * diff * diff * dir;
                         force += -other.mass * pressureTerm * gradW;
 
-                        // Viscosity force contribution.
+                        // Viscosity force.
                         float3 dv = other.velocity - self.velocity;
                         float viscLapFactor = 45.0f / (PI * pow(h, 6));
                         float lapW_visc = viscLapFactor * (h - dist);
                         float avgViscosity = 0.5f * (self.viscosity + other.viscosity);
                         force += avgViscosity * other.mass * dv / other.density * lapW_visc;
 
-                        // Accumulate color field gradient and Laplacian for surface tension.
+                        // Surface tension: accumulate color field gradient and Laplacian.
                         colorGradient += other.mass * gradW / other.density;
-                        // Compute Laplacian of the poly6 kernel:
-                        // Laplacian(W_poly6) = - (1890 / (64 * PI * h^9)) * (h2 - rSq) * (h2 - 5*rSq)
                         float lapW = -(1890.0 / (64.0 * PI * pow(h, 9))) * (h2 - rSq) * (h2 - 5.0 * rSq);
                         colorLaplacian += other.mass * lapW / other.density;
 
-                        // XSPH velocity correction contribution.
+                        // XSPH velocity correction.
                         float diff2 = h2 - rSq;
                         float W = poly6 * diff2 * diff2 * diff2;
                         float rho_ij = 0.5f * (self.density + other.density);
@@ -278,8 +281,7 @@ void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
         }
     }
 
-    // Compute surface tension force using a curvature formulation:
-    // F_surface = -sigma * curvature * n, where curvature = (Laplacian(color)) / (|grad(color)| + EPSILON)
+    // Surface tension force using curvature formulation.
     float gradMag = length(colorGradient);
     if (gradMag > _SurfaceTensionThreshold)
     {
@@ -290,6 +292,7 @@ void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
 
     self.acceleration = force / densitySelf;
 
+    // Apply XSPH velocity correction.
     if (normFactor > EPSILON)
     {
         velocityCorrection *= (_XSPHEpsilon / normFactor);
@@ -299,9 +302,10 @@ void CS_ForceXSPH(uint3 id : SV_DispatchThreadID)
     Particles[idx] = self;
 }
 
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // KERNEL: CS_VvHalfStep
-// --------------------------------------------------------------------
+// Performs a half-step update of velocity and position.
+//------------------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_VvHalfStep(uint3 id : SV_DispatchThreadID)
 {
@@ -314,9 +318,10 @@ void CS_VvHalfStep(uint3 id : SV_DispatchThreadID)
     Particles[idx] = p;
 }
 
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // KERNEL: CS_VvFullStep
-// --------------------------------------------------------------------
+// Completes the velocity update using the second half-step.
+//------------------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_VvFullStep(uint3 id : SV_DispatchThreadID)
 {
@@ -328,9 +333,10 @@ void CS_VvFullStep(uint3 id : SV_DispatchThreadID)
     Particles[idx] = p;
 }
 
-// --------------------------------------------------------------------
-// KERNEL: CS_BoundObs (Merged Boundaries & Obstacle Collision)
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// KERNEL: CS_BoundObs
+// Handles collisions with simulation boundaries and obstacles.
+//------------------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_BoundObs(uint3 id : SV_DispatchThreadID)
 {
@@ -400,7 +406,7 @@ void CS_BoundObs(uint3 id : SV_DispatchThreadID)
             localNormal = normalize(localNormal);
 
             float3 worldNormal = normalize(mul((float3x3)_BoundaryMatrix, localNormal));
-            float restitutionFactor = 1.f;
+            float restitutionFactor = 1.0f;
             float frictionFactor = 0.0f;
             float3 vNormal = dot(p.velocity, worldNormal) * worldNormal;
             float3 vTangent = p.velocity - vNormal;
@@ -408,7 +414,7 @@ void CS_BoundObs(uint3 id : SV_DispatchThreadID)
             vTangent *= (1.0f - frictionFactor);
             p.velocity = vNormal + vTangent;
 
-            // Record collision event by incrementing the counter.
+            // Increment collision counter.
             InterlockedAdd(CollisionCounter[0], 1);
         }
     }
@@ -479,9 +485,10 @@ void CS_BoundObs(uint3 id : SV_DispatchThreadID)
     Particles[idx] = p;
 }
 
-// --------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // KERNEL: CS_VelocityDamping
-// --------------------------------------------------------------------
+// Applies a simple velocity damping to simulate drag.
+//------------------------------------------------------------------------------
 [numthreads(256, 1, 1)]
 void CS_VelocityDamping(uint3 id : SV_DispatchThreadID)
 {

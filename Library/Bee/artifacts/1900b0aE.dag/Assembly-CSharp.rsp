@@ -393,8 +393,10 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.32f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
 "Assets/Boundary.cs"
 "Assets/FreeCameraController.cs"
+"Assets/SceneManager.cs"
 "Assets/SpawnBox.cs"
 "Assets/SPH.cs"
+"Assets/SphereMover.cs"
 "Assets/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0
 /deterministic

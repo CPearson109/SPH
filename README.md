@@ -67,7 +67,8 @@ This project implements a real-time SPH-based fluid simulation capable of modell
 
 ---
 
-If you're interested in the theoretical background and implementation details here is my Paper on the project [readme_files/Dissertation-CameronPearson-40530119.pdf]
+If you're interested in the theoretical background and implementation details here is my Paper on the project [View Dissertation Report (PDF)](readme_files/Dissertation-CameronPearson-40530119.pdf)
+
 
 ---
 

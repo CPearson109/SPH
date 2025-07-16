@@ -9,7 +9,7 @@
 
 This project implements a real-time SPH-based fluid simulation capable of modelling **multi-phase fluids** (e.g. oil and water) using compute shaders in Unity. It balances **computational efficiency** with **visual realism**, targeting interactive applications like games and virtual environments.
 
-> Built as part of the Honours Dissertation for the BSc (Hons) Computing at Edinburgh Napier University.
+> Built as part of the Honours Dissertation for the BSc (Hons) Games Development at Edinburgh Napier University.
 
 ---
 

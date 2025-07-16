@@ -1,95 +1,75 @@
-Real-Time Multi-Phase Fluid Simulation
-This project demonstrates a GPU-accelerated, Smoothed Particle Hydrodynamics (SPH)-based simulation capable of rendering real-time interactions between multi-phase fluids (e.g., oil and water). Developed using Unity's compute shader pipeline, this project showcases optimisations in spatial partitioning, fluid interface dynamics, and visual rendering fidelity.
+#  Real-Time Multi-Phase Fluid Simulation
+*A GPU-accelerated fluid simulation using Smoothed Particle Hydrodynamics (SPH) in Unity.*
 
-Table of Contents
-Project Overview
+![Simulation Screenshot](images/simulation_preview.png) <!-- Replace with your actual image -->
 
-Features
+---
 
-Getting Started
+##  Project Overview
 
-Folder Structure
+This project implements a real-time SPH-based fluid simulation capable of modelling **multi-phase fluids** (e.g. oil and water) using compute shaders in Unity. It balances **computational efficiency** with **visual realism**, targeting interactive applications like games and virtual environments.
 
-Dependencies
+> Built as part of the Honours Dissertation for the BSc (Hons) Computing at Edinburgh Napier University.
 
-Usage
+---
 
-Key Scripts
+## Features
 
-Known Issues
+-  Multi-phase SPH simulation (supports multiple fluid types with unique properties)
+-  Surface tension and interfacial dynamics
+-  GPU compute shader acceleration for real-time performance
+-  Particle boundary collision and object interaction
+-  Real-time visualisation with Unity shaders
+-  Modular particle spawners
 
-Author
+---
 
-Project Overview
-This system implements real-time SPH simulation to model multi-phase fluid dynamics, focusing on performance and visual accuracy. It supports fluid interaction, boundary constraints, surface tension effects, and real-time visualisation.
+##  Getting Started
 
-Features
-Real-time GPU-accelerated SPH solver
+1. Clone or download this repository.
+2. Open in **Unity 2022.3 LTS** or later.
+3. Add `SPH.cs` to a GameObject in the scene.
+4. Add one or more `SpawnBox` components to define fluid sources.
+5. Attach a boundary cube (or use fallback bounds).
+6. Assign a material to the SPH renderer and hit *Play*.
 
-Support for multiple fluid types with different physical properties
+---
 
-Surface tension modelling with dynamic thresholding
+## 🛠Configuration
 
-Efficient neighbour search via spatial grids
+| Setting                  | File         | Description                                        |
+|--------------------------|--------------|----------------------------------------------------|
+| Particle Count           | `SpawnBox.cs`| Number of particles per volume                     |
+| SPH Physics Parameters   | `SPH.cs`     | Viscosity, density, surface tension, etc.          |
+| Grid Resolution          | `SPH.cs`     | Controls spatial partitioning resolution           |
+| Collision & Boundaries   | `SPH.cs`     | Set obstacle colliders and simulation limits       |
 
-XSPH velocity smoothing
+---
 
-Procedural particle spawning from multiple sources
+## Screenshots
 
-Visual rendering using Unity shader pipeline
+### Multi-phase Interaction
+![Oil and Water Simulation](images/oil_water_mix.gif)
 
-Getting Started
-Open the project in Unity 2022.3 LTS or newer.
+### Real-Time Rendering
+![Rendered Particles](images/fluid_render.png)
 
-Attach SPH.cs to an empty GameObject in your scene.
+---
 
-Create and assign SpawnBox GameObjects to initialise fluid regions.
+## Known Limitations
 
-Assign a boundary cube and optional colliders for obstacles.
+-  High particle counts (>200k) may reduce performance on older GPUs.
+-  Surface tension threshold requires tuning to avoid instability.
+-  Rotating boundaries are supported but may require manual adjustment.
 
-Run the scene.
+---
 
-Folder Structure
-markdown
-Copy
-Edit
-/Assets
-  /Scripts
-    - SPH.cs
-    - SpawnBox.cs
-  /Shaders
-    - SPHCompute.compute
-    - ParticleRender.shader
-Dependencies
-Unity 2022.3 LTS
+If you're interested in the theoretical background and implementation details here is my Paper on the project
 
-Compute shader support (DX11+ or Metal)
+---
 
-Compatible GPU (NVIDIA GTX 10xx or newer recommended)
+##  Author
 
-Usage
-Adjust fluid parameters (e.g., viscosity, mass) in the SpawnBox script.
-
-Set simulation bounds via the boundary cube or fallback values.
-
-Enable debugging visuals using Gizmos in the Unity editor.
-
-Key Scripts
-SPH.cs: Core simulation manager, handling particle buffers, grid generation, and compute dispatch.
-
-SpawnBox.cs: Defines spawn volumes and particle properties per fluid type.
-
-SPHCompute.compute: Compute shader handling SPH kernel calculations and particle updates.
-
-ParticleRender.shader: Shader for rendering particles as fluid points.
-
-Known Issues
-Simulation performance may degrade with more than ~200,000 particles on mid-tier GPUs.
-
-Certain surface tension configurations can lead to instability if parameters are not tuned.
-
-Author
-Cameron Pearson
-40530119 – BSc (Hons) Computing
-Edinburgh Napier University, 2025
+**Cameron Pearson**  
+BSc (Hons) Games Development
 

@@ -55,7 +55,7 @@ This project implements a real-time SPH-based fluid simulation capable of modell
 <img src="readme_files/box.jpg" alt="Boundary Box with Particles" width="33%" />
 
 ### Object Interactions  
-<img src="readme_files/ball.jpg" alt="Sphere Fluid Interaction" width="33%" />
+<img src="readme_files/Ball.jpg" alt="Sphere Fluid Interaction" width="33%" />
 
 
 ---

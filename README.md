@@ -1,7 +1,7 @@
 #  Real-Time Multi-Phase Fluid Simulation
 *A GPU-accelerated fluid simulation using Smoothed Particle Hydrodynamics (SPH) in Unity.*
 
-![Simulation Screenshot](images/simulation_preview.png) <!-- Replace with your actual image -->
+![Simulation Screenshot](readme_files/Splash.jpg)
 
 ---
 
@@ -49,10 +49,13 @@ This project implements a real-time SPH-based fluid simulation capable of modell
 ## Screenshots
 
 ### Multi-phase Interaction
-![Oil and Water Simulation](images/oil_water_mix.gif)
+![Oil and Water Simulation](readme_files/MuliPhase1.PNG)
 
-### Real-Time Rendering
-![Rendered Particles](images/fluid_render.png)
+### Boundary Interactions
+![Rendered Particles](readme_files/box.jpg)
+
+### Object Interactions
+![Rendered Particles](readme_files/ball.jpg)
 
 ---
 
@@ -64,7 +67,7 @@ This project implements a real-time SPH-based fluid simulation capable of modell
 
 ---
 
-If you're interested in the theoretical background and implementation details here is my Paper on the project
+If you're interested in the theoretical background and implementation details here is my Paper on the project [readme_files/Dissertation-CameronPearson-40530119.pdf]
 
 ---
 

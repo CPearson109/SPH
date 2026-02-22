@@ -9,6 +9,13 @@
             "usedInScenes": []
         },
         {
+            "managedAssemblyName": "Assembly-CSharp.dll",
+            "nativeClass": "",
+            "fullManagedTypeName": "CircularMotion",
+            "moduleName": "",
+            "usedInScenes": []
+        },
+        {
             "managedAssemblyName": "",
             "nativeClass": "DelayedCallManager",
             "fullManagedTypeName": "",
@@ -21,7 +28,10 @@
             "fullManagedTypeName": "",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -37,7 +47,10 @@
             "fullManagedTypeName": "",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -53,7 +66,10 @@
             "fullManagedTypeName": "",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -69,7 +85,10 @@
             "fullManagedTypeName": "",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -85,7 +104,10 @@
             "fullManagedTypeName": "",
             "moduleName": "AI",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -107,6 +129,13 @@
             "nativeClass": "RuntimeInitializeOnLoadManager",
             "fullManagedTypeName": "",
             "moduleName": "Core",
+            "usedInScenes": []
+        },
+        {
+            "managedAssemblyName": "Assembly-CSharp.dll",
+            "nativeClass": "",
+            "fullManagedTypeName": "SceneSwitcher",
+            "moduleName": "",
             "usedInScenes": []
         },
         {
@@ -164,7 +193,10 @@
             "fullManagedTypeName": "UnityEditor.MonoScript",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -208,7 +240,10 @@
             "fullManagedTypeName": "UnityEngine.AudioBehaviour",
             "moduleName": "Audio",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -217,7 +252,10 @@
             "fullManagedTypeName": "UnityEngine.AudioListener",
             "moduleName": "Audio",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -226,7 +264,22 @@
             "fullManagedTypeName": "UnityEngine.Behaviour",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
+            ]
+        },
+        {
+            "managedAssemblyName": "UnityEngine.dll",
+            "nativeClass": "BoxCollider",
+            "fullManagedTypeName": "UnityEngine.BoxCollider",
+            "moduleName": "Physics",
+            "usedInScenes": [
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -235,7 +288,10 @@
             "fullManagedTypeName": "UnityEngine.Camera",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -244,7 +300,10 @@
             "fullManagedTypeName": "UnityEngine.Collider",
             "moduleName": "Physics",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -253,7 +312,10 @@
             "fullManagedTypeName": "UnityEngine.Component",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -262,7 +324,10 @@
             "fullManagedTypeName": "UnityEngine.ComputeShader",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -271,7 +336,10 @@
             "fullManagedTypeName": "UnityEngine.Cubemap",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -280,15 +348,11 @@
             "fullManagedTypeName": "UnityEngine.GameObject",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
-        },
-        {
-            "managedAssemblyName": "Unity.InputSystem.dll",
-            "nativeClass": "",
-            "fullManagedTypeName": "UnityEngine.InputSystem.InputActionAsset",
-            "moduleName": "",
-            "usedInScenes": []
         },
         {
             "managedAssemblyName": "Unity.InputSystem.dll",
@@ -317,7 +381,10 @@
             "fullManagedTypeName": "UnityEngine.Light",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -326,7 +393,10 @@
             "fullManagedTypeName": "UnityEngine.LightmapSettings",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -335,7 +405,10 @@
             "fullManagedTypeName": "UnityEngine.LineRenderer",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -344,7 +417,10 @@
             "fullManagedTypeName": "UnityEngine.Material",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -353,7 +429,10 @@
             "fullManagedTypeName": "UnityEngine.Mesh",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -362,7 +441,10 @@
             "fullManagedTypeName": "UnityEngine.MeshFilter",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -371,7 +453,10 @@
             "fullManagedTypeName": "UnityEngine.MeshRenderer",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -380,7 +465,10 @@
             "fullManagedTypeName": "UnityEngine.MonoBehaviour",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -389,7 +477,10 @@
             "fullManagedTypeName": "UnityEngine.Object",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -405,7 +496,10 @@
             "fullManagedTypeName": "UnityEngine.Renderer",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -421,7 +515,10 @@
             "fullManagedTypeName": "UnityEngine.RenderSettings",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -430,7 +527,10 @@
             "fullManagedTypeName": "UnityEngine.Shader",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -439,7 +539,10 @@
             "fullManagedTypeName": "UnityEngine.SphereCollider",
             "moduleName": "Physics",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -455,7 +558,10 @@
             "fullManagedTypeName": "UnityEngine.TextAsset",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -464,7 +570,10 @@
             "fullManagedTypeName": "UnityEngine.Texture",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -473,7 +582,10 @@
             "fullManagedTypeName": "UnityEngine.Texture2D",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         },
         {
@@ -482,7 +594,10 @@
             "fullManagedTypeName": "UnityEngine.Transform",
             "moduleName": "Core",
             "usedInScenes": [
-                "Assets/Scenes/SampleScene.unity"
+                "Assets/Scenes/Scene1.unity",
+                "Assets/Scenes/Scene2.unity",
+                "Assets/Scenes/Scene3.unity",
+                "Assets/Scenes/Scene4.unity"
             ]
         }
     ],
@@ -3155,6 +3270,10 @@
     "forceIncludeModules": [],
     "forceExcludeModules": [
         "AMD",
-        "NVIDIA"
+        "AR",
+        "ClusterInput",
+        "ClusterRenderer",
+        "NVIDIA",
+        "VirtualTexturing"
     ]
 }

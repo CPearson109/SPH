@@ -79,9 +79,12 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _DensityThresholdMax: 1.05
+    - _DensityThresholdMin: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EdgeSoftness: 0.409
+    - _EmissionStrength: 1
     - _Falloff: 0.1
     - _FresnelPower: 3
     - _GlossMapScale: 1
@@ -112,6 +115,7 @@ Material:
     - _SrcBlend: 1
     - _Threshold: 0.5
     - _UVSec: 0
+    - _VelocityScale: 0.4
     - _WaveScale: 6.56
     - _WaveSpeed: 4.94
     - _ZWrite: 1
@@ -126,6 +130,7 @@ Material:
     - _PrimaryColor: {r: 0, g: 0.0184803, b: 1, a: 1}
     - _SecondaryColor: {r: 0, g: 0.6484008, b: 1, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _VelocityColor: {r: 0.6528301, g: 0.53762484, b: 0, a: 1}
     - _WaterColor: {r: 0, g: 1, b: 0.9683142, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

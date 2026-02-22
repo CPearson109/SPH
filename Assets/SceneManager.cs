@@ -25,10 +25,5 @@ public class SceneSwitcher : MonoBehaviour
         {
             SceneManager.LoadScene("Scene4"); // Replace with your actual scene name
         }
-        // Check if the "5" key is pressed
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            SceneManager.LoadScene("Scene5"); // Replace with your actual scene name
-        }
     }
 }

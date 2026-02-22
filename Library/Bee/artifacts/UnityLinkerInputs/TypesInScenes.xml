@@ -1,11 +1,12 @@
 <linker>
 	<assembly fullname="Assembly-CSharp">
+		<type fullname="CircularMotion" preserve="nothing"/>
 		<type fullname="FreeCameraController" preserve="nothing"/>
+		<type fullname="SceneSwitcher" preserve="nothing"/>
 		<type fullname="SpawnBox" preserve="nothing"/>
 		<type fullname="SPH" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="Unity.InputSystem">
-		<type fullname="UnityEngine.InputSystem.InputActionAsset" preserve="nothing"/>
 		<type fullname="UnityEngine.InputSystem.InputSettings" preserve="nothing"/>
 		<type fullname="UnityEngine.InputSystem.InputSystemObject" preserve="nothing"/>
 		<type fullname="UnityEngine.InputSystem.RemoteInputPlayerConnection" preserve="nothing"/>
@@ -23,6 +24,7 @@
 		<type fullname="UnityEngine.AudioBehaviour" preserve="nothing"/>
 		<type fullname="UnityEngine.AudioListener" preserve="nothing"/>
 		<type fullname="UnityEngine.Behaviour" preserve="nothing"/>
+		<type fullname="UnityEngine.BoxCollider" preserve="nothing"/>
 		<type fullname="UnityEngine.Camera" preserve="nothing"/>
 		<type fullname="UnityEngine.Collider" preserve="nothing"/>
 		<type fullname="UnityEngine.Component" preserve="nothing"/>

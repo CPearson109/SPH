@@ -619,7 +619,7 @@ MonoBehaviour:
   fluidMaterial: {fileID: 2100000, guid: dd40e7b868360c24a878bf764aa4f5a9, type: 2}
   sphCompute: {fileID: 7200000, guid: 0e803cd39b0285949a31f4a2c4db0a3a, type: 3}
   maxParticlesPerCell: 500
-  gridResolution: 80
+  gridResolution: 90
   spawnBoxes:
   - {fileID: 1237233259}
   totalCells: 0
